@@ -51,7 +51,7 @@ color: white;
 border-radius:5px;</string>
        </property>
        <property name="text">
-        <string>Auto Connect</string>
+        <string>Find Server</string>
        </property>
       </widget>
      </item>
@@ -76,7 +76,7 @@ color: white;
 border-radius:5px;</string>
      </property>
      <property name="text">
-      <string>Log In</string>
+      <string>Connect server</string>
      </property>
     </widget>
    </item>

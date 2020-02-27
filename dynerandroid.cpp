@@ -2,6 +2,7 @@
 #include "ui_dynerandroid.h"
 #include "widget/serverConnection/serverconnection.h"
 #include <QDebug>
+#include "data/allaction.h"
 
 DynerAndroid::DynerAndroid(QWidget *parent)
     : QMainWindow(parent)
@@ -20,5 +21,6 @@ DynerAndroid::~DynerAndroid()
 
 void DynerAndroid::hideConnectionWdget()
 {
+    serverSocket::serverClient->write(QString::number(ALLAction::getTotaltableNo).toUtf8());
     childFrame->hide();
 }

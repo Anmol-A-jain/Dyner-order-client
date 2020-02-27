@@ -8,6 +8,8 @@
 #include <QHostInfo>
 #include <QComboBox>
 #include "server/serversocket.h"
+#include "data/xmlmanipulation.h"
+#include "data/globaldata.h"
 
 namespace Ui {
 class serverConnection;
@@ -60,9 +62,15 @@ public slots :
 
     void myConnected()
     {
-        serverSocket::serverClient = socket;
-        qDebug() << "serverConnection (myConnected) : state : " << serverSocket::serverClient->state() ;
-        disconnect(socket,&QTcpSocket::connected,this,&findByPing::myConnected);
+        //serverSocket::serverClient = socket;
+        GlobalData g;
+        XmlManipulation::setData(g.getTagName(g.ipAddress),g.getattribute(g.ipAddress),socket->peerAddress().toString());
+        qDebug() << "serverConnection (myConnected) : data : " << socket->write("1") ;
+        qDebug() << "serverConnection (myConnected) : state : " << socket->state() ;
+        qDebug() << "serverConnection (myConnected) : ip address : " << socket->peerAddress().toString() ;
+
+        socket->disconnectFromHost();
+
         exit(0);
     }
 

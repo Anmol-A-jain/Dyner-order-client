@@ -70,7 +70,26 @@ void serverConnection::stateChanged(QAbstractSocket::SocketState state)
 
 void serverConnection::on_btnauto_clicked()
 {
+    const QHostAddress &localhost = QHostAddress::LocalHost;
+    QString ipaddress;
+    for(const QHostAddress &address : QNetworkInterface::allAddresses() )
+    {
+        if(address != localhost && address.protocol() == QAbstractSocket::IPv4Protocol )
+        {
+            baseIp = address.toString();
+
+            while(baseIp.right(1) != "." )
+            {
+                baseIp = baseIp.left(baseIp.length()-1);
+            }
+            ui->txtIp->setText(baseIp);
+        }
+    }
+
     QString baseNetowrk = baseIp;
+
+    GlobalData g;
+    XmlManipulation::setData(g.getTagName(g.ipAddress),g.getattribute(g.ipAddress),"");
 
     for(int i = 0; i <= 255; i++)
     {
@@ -86,18 +105,18 @@ void serverConnection::on_btnauto_clicked()
 
 void serverConnection::on_btnLogin_clicked()
 {
-    qDebug() << "serverConnection (on_btnLogin_clicked) : state : " << serverSocket::serverClient->state() ;
-    if(serverSocket::serverClient->state() == QTcpSocket::UnconnectedState)
+    GlobalData g;
+    QString ip = XmlManipulation::getData(g.getTagName(g.ipAddress),g.getattribute(g.ipAddress));
+
+    if(ip != "")
     {
-        ui->lblStatus->setText("Try again");
-    }
-    if(serverSocket::serverClient->state() == QTcpSocket::ConnectedState)
-    {
-        static_cast<DynerAndroid*>(myParent)->hideConnectionWdget();
-        serverSocket::serverClient->write("1");
+        serverSocket s;
+        s.connectToSerever(ip);
+        qDebug() << "serverConnection (on_btnLogin_clicked) : ip address : " << ip;
         return;
     }
+
+    ui->lblStatus->setText("Server not found");
     ui->btnLogin->hide();
     ui->btnauto->show();
-    ui->lblStatus->clear();
 }
