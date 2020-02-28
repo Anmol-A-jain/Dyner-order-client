@@ -15,6 +15,14 @@ void serverSocket::connectToSerever(QString ip)
     serverClient->connectToHost(ip,1812);
 }
 
+void serverSocket::setAction(int action, QByteArray data)
+{
+    QByteArray pre = QByteArray::number(action) + "~";
+    data = pre.append(data);
+    qDebug() << "serverSocket (setAction) : data =" << data;
+    serverClient->write(data);
+}
+
 void serverSocket::myReadReady()
 {
     qDebug() << "serverSocket (myReadReady) : msg comming";

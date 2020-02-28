@@ -11,6 +11,7 @@ public:
     serverSocket();
     void connectToSerever(QString ip);
     static QTcpSocket* serverClient;
+    void setAction(int action,QByteArray data);
 
 public slots:
     void myReadReady();
