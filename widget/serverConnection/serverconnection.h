@@ -66,10 +66,10 @@ public slots :
         GlobalData g;
         XmlManipulation::setData(g.getTagName(g.ipAddress),g.getattribute(g.ipAddress),socket->peerAddress().toString());
         qDebug() << "serverConnection (myConnected) : data : " << socket->write("1") ;
-        qDebug() << "serverConnection (myConnected) : state : " << socket->state() ;
         qDebug() << "serverConnection (myConnected) : ip address : " << socket->peerAddress().toString() ;
 
         socket->disconnectFromHost();
+        qDebug() << "serverConnection (myConnected) : state : " << socket->state() ;
 
         exit(0);
     }

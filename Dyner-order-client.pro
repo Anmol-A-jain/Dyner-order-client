@@ -22,7 +22,10 @@ SOURCES += \
     main.cpp \
     dynerandroid.cpp \
     server/serversocket.cpp \
-    widget/serverConnection/serverconnection.cpp
+    widget/Cart/cart.cpp \
+    widget/TableCustomButtons/tablecustombuttons.cpp \
+    widget/serverConnection/serverconnection.cpp \
+    widget/tableList/tablelist.cpp
 
 HEADERS += \
     data/allaction.h \
@@ -30,11 +33,17 @@ HEADERS += \
     data/xmlmanipulation.h \
     dynerandroid.h \
     server/serversocket.h \
-    widget/serverConnection/serverconnection.h
+    widget/Cart/cart.h \
+    widget/TableCustomButtons/tablecustombuttons.h \
+    widget/serverConnection/serverconnection.h \
+    widget/tableList/tablelist.h
 
 FORMS += \
     dynerandroid.ui \
-    widget/serverConnection/serverconnection.ui
+    widget/Cart/cart.ui \
+    widget/TableCustomButtons/tablecustombuttons.ui \
+    widget/serverConnection/serverconnection.ui \
+    widget/tableList/tablelist.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

@@ -46,8 +46,8 @@ void serverConnection::on_btnConnect_clicked()
         ui->lblStatus->setText("Connected");
         return;
     }
-    serverSocket s;
-    s.connectToSerever(ui->txtIp->text());
+    serverSocket* s = new serverSocket(myParent);
+    s->connectToSerever(ui->txtIp->text());
 
     if(serverSocket::serverClient->state() != QTcpSocket::ConnectingState || serverSocket::serverClient->state() != QTcpSocket::ConnectedState)
     {
@@ -110,8 +110,8 @@ void serverConnection::on_btnLogin_clicked()
 
     if(ip != "")
     {
-        serverSocket s;
-        s.connectToSerever(ip);
+        serverSocket* s = new serverSocket(myParent);
+        s->connectToSerever(ip);
         qDebug() << "serverConnection (on_btnLogin_clicked) : ip address : " << ip;
         return;
     }

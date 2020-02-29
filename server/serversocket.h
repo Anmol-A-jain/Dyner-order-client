@@ -8,18 +8,21 @@
 class serverSocket : public QObject
 {
 public:
-    serverSocket();
+    serverSocket(QWidget* parent);
     void connectToSerever(QString ip);
     static QTcpSocket* serverClient;
-    void setAction(int action,QByteArray data);
+    static QByteArray setAction(int action,QByteArray data);
 
 public slots:
     void myReadReady();
 
     void myConnected();
 
+    void myDisconnect();
+
 
 private:
+    QWidget* myParent;
 };
 
 #endif // SERVERSOCKET_H
