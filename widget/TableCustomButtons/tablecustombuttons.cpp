@@ -24,5 +24,5 @@ QString TableCustomButtons::getText()
 
 void TableCustomButtons::on_btnTable_clicked()
 {
-    static_cast<DynerAndroid*>(myParent)->loadCart(tbl);
+    static_cast<DynerAndroid*>(myParent)->cartWidgetWindow(tbl);
 }

@@ -47,12 +47,14 @@ public:
     findByPing(QString ipAddress)
     {
         this->currIp = ipAddress;
+        isActive = false;
     }
 
     void run()
     {
         socket = new QTcpSocket();
         connect(socket,&QTcpSocket::connected,this,&findByPing::myConnected);
+        connect(socket,&QTcpSocket::stateChanged,this,&findByPing::mystateChange);
         socket->connectToHost(this->currIp,1812);
 
         exec();
@@ -65,7 +67,6 @@ public slots :
         //serverSocket::serverClient = socket;
         GlobalData g;
         XmlManipulation::setData(g.getTagName(g.ipAddress),g.getattribute(g.ipAddress),socket->peerAddress().toString());
-        qDebug() << "serverConnection (myConnected) : data : " << socket->write("1") ;
         qDebug() << "serverConnection (myConnected) : ip address : " << socket->peerAddress().toString() ;
 
         socket->disconnectFromHost();
@@ -73,10 +74,23 @@ public slots :
 
         exit(0);
     }
+    void mystateChange(QAbstractSocket::SocketState state)
+    {
+        qDebug() << "serverConnection (stateChanged) : state : " << serverSocket::serverClient->state() ;
+        if(state == QTcpSocket::ConnectingState)
+        {
+            isActive = true;
+        }
+        if(state == QTcpSocket::UnconnectedState && isActive)
+        {
+            exit(0);
+        }
+    }
 
 private:
     QString currIp;
     QTcpSocket* socket;
+    bool isActive;
 };
 
 #endif // SERVERCONNECTION_H

@@ -62,9 +62,9 @@ void serverConnection::stateChanged(QAbstractSocket::SocketState state)
     {
         ui->lblStatus->setText("Try again");
     }
-    if(state == QTcpSocket::ConnectedState)
+    if(state == QTcpSocket::ConnectingState)
     {
-        static_cast<DynerAndroid*>(myParent)->hideConnectionWdget();
+        ui->lblStatus->setText("Connecting...");
     }
 }
 

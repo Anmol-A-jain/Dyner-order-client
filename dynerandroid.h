@@ -14,11 +14,12 @@ class DynerAndroid : public QMainWindow
 public:
     DynerAndroid(QWidget *parent = nullptr);
     ~DynerAndroid();
-    void hideConnectionWdget();
-    void showConnectionWdget();
-    void loadTable(int tbl);
-    void loadTable();
-    void loadCart(int tbl);
+
+    QWidget* newWindow(int option,int tblNo = 0);
+    void dinningTableList(int tbl);
+    void cartWidgetWindow(int tblNo);
+    void logInWidget();
+    void closeWidget();
 
 private slots:
     void on_btnHome_clicked();
@@ -30,6 +31,7 @@ private:
     QWidget* tableButtons;
     QWidget* cart;
     int tbl;
+    enum widgetWindow{serverConnectionWindow,cartWindow,tableListWindow,closeWindowWidget};
 
 };
 #endif // DYNERANDROID_H

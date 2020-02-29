@@ -23,6 +23,7 @@ SOURCES += \
     dynerandroid.cpp \
     server/serversocket.cpp \
     widget/Cart/cart.cpp \
+    widget/CloseWindow/closewindow.cpp \
     widget/TableCustomButtons/tablecustombuttons.cpp \
     widget/serverConnection/serverconnection.cpp \
     widget/tableList/tablelist.cpp
@@ -34,6 +35,7 @@ HEADERS += \
     dynerandroid.h \
     server/serversocket.h \
     widget/Cart/cart.h \
+    widget/CloseWindow/closewindow.h \
     widget/TableCustomButtons/tablecustombuttons.h \
     widget/serverConnection/serverconnection.h \
     widget/tableList/tablelist.h
@@ -41,6 +43,7 @@ HEADERS += \
 FORMS += \
     dynerandroid.ui \
     widget/Cart/cart.ui \
+    widget/CloseWindow/closewindow.ui \
     widget/TableCustomButtons/tablecustombuttons.ui \
     widget/serverConnection/serverconnection.ui \
     widget/tableList/tablelist.ui
