@@ -62,28 +62,31 @@ QWidget* DynerAndroid::newWindow(int option,int tblNo)
 void DynerAndroid::dinningTableList(int tbl)
 {
     this->tbl = tbl;
-    delete childFrame;
-    childFrame = newWindow(widgetWindow::tableListWindow);
+    childFrame->deleteLater();
+    tableButtons = newWindow(widgetWindow::tableListWindow);
+    childFrame = tableButtons;
     ui->windowContainer->addWidget(childFrame);
 }
 
 void DynerAndroid::cartWidgetWindow(int tblNo)
 {
-    delete childFrame;
-    childFrame = newWindow(widgetWindow::cartWindow,tblNo);
+    childFrame->deleteLater();
+    cart = newWindow(widgetWindow::cartWindow,tblNo);
+    childFrame = cart;
     ui->windowContainer->addWidget(childFrame);
 }
 
 void DynerAndroid::logInWidget()
 {
-    delete childFrame;
-    childFrame = newWindow(widgetWindow::serverConnectionWindow);
+    childFrame->deleteLater();
+    logWindow = newWindow(widgetWindow::serverConnectionWindow);
+    childFrame = logWindow ;
     ui->windowContainer->addWidget(childFrame);
 }
 
 void DynerAndroid::closeWidget()
 {
-    delete childFrame;
+    childFrame->deleteLater();
     childFrame = newWindow(widgetWindow::closeWindowWidget);
     ui->windowContainer->addWidget(childFrame);
 }

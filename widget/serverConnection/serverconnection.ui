@@ -58,29 +58,6 @@ border-radius:5px;</string>
     </layout>
    </item>
    <item>
-    <widget class="QPushButton" name="btnLogin">
-     <property name="minimumSize">
-      <size>
-       <width>0</width>
-       <height>125</height>
-      </size>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>24</pointsize>
-      </font>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">background-color: #ff696a;
-color: white;
-border-radius:5px;</string>
-     </property>
-     <property name="text">
-      <string>Connect server</string>
-     </property>
-    </widget>
-   </item>
-   <item>
     <spacer name="verticalSpacer_3">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
@@ -259,7 +236,6 @@ border-radius:5px;</string>
  </widget>
  <tabstops>
   <tabstop>btnauto</tabstop>
-  <tabstop>btnLogin</tabstop>
   <tabstop>txtIp</tabstop>
  </tabstops>
  <resources/>

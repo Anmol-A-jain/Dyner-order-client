@@ -11,6 +11,8 @@
 #include "data/xmlmanipulation.h"
 #include "data/globaldata.h"
 
+class findByPing;
+
 namespace Ui {
 class serverConnection;
 }
@@ -23,6 +25,7 @@ class serverConnection : public QWidget
 public:
     explicit serverConnection(QWidget *parent = nullptr);
     ~serverConnection();
+    void connectToServer(QString ip);
 
 private slots:
     void on_btnConnect_clicked();
@@ -30,8 +33,6 @@ private slots:
     void stateChanged(QAbstractSocket::SocketState state);
 
     void on_btnauto_clicked();
-
-    void on_btnLogin_clicked();
 
 private:
     Ui::serverConnection *ui;
@@ -44,8 +45,9 @@ class findByPing : public QThread
 {
     Q_OBJECT
 public:
-    findByPing(QString ipAddress)
+    findByPing(QString ipAddress,QWidget* parent = nullptr)
     {
+        myParent = parent;
         this->currIp = ipAddress;
         isActive = false;
     }
@@ -64,19 +66,20 @@ public slots :
 
     void myConnected()
     {
+        static_cast<serverConnection*>(myParent)->connectToServer(currIp);
+
         //serverSocket::serverClient = socket;
-        GlobalData g;
+        /*GlobalData g;
         XmlManipulation::setData(g.getTagName(g.ipAddress),g.getattribute(g.ipAddress),socket->peerAddress().toString());
-        qDebug() << "serverConnection (myConnected) : ip address : " << socket->peerAddress().toString() ;
+        qDebug() << "serverConnection (myConnected) : ip address : " << socket->peerAddress().toString() ;*/
 
         socket->disconnectFromHost();
-        qDebug() << "serverConnection (myConnected) : state : " << socket->state() ;
+        qDebug() << "findByPing (myConnected) : state : " << socket->state() ;
 
-        exit(0);
     }
     void mystateChange(QAbstractSocket::SocketState state)
     {
-        qDebug() << "serverConnection (stateChanged) : state : " << serverSocket::serverClient->state() ;
+        //qDebug() << "findByPing (stateChanged) : state : " << serverSocket::serverClient->state() ;
         if(state == QTcpSocket::ConnectingState)
         {
             isActive = true;
@@ -91,6 +94,7 @@ private:
     QString currIp;
     QTcpSocket* socket;
     bool isActive;
+    QWidget* myParent;
 };
 
 #endif // SERVERCONNECTION_H

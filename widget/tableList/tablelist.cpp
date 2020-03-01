@@ -16,7 +16,7 @@ tableList::tableList(int tbl,QWidget *parent) :
     ui->setupUi(this);
     myParent = parent;
     this->tbl = tbl;
-    this->column = 2;
+    this->column = 3;
     QScrollArea *scrollArea = ui->scrollArea;
     scrollArea->horizontalScrollBar()->setStyleSheet("QScrollBar {height:0px;}");
     scrollArea->verticalScrollBar()->setStyleSheet("QScrollBar {width:10px;}");
@@ -33,18 +33,19 @@ void tableList::setButton()
 {
 
     row = tbl/column;
-    row = (row%column != 0) ? row + 1 : row ;
-    int count = 1;
+    row = (tbl%column > 0) ? (row + 1) : row ;
 
     QGridLayout* layout = ui->btnList;
+
+    qDebug() << "tableList (setButton) : row%column " << row%column ;
     qDebug() << "tableList (setButton) : row " << row ;
     qDebug() << "tableList (setButton) : table " << tbl ;
 
-    for (int i = 0; i < row; ++i)
+    for (int i = 0,count = 1; i < row; ++i)
     {
         for (int j = 0; j < column; ++j)
         {
-            if(count != (tbl+1))
+            if(count <= tbl)
             {
                 TableCustomButtons* btn = new TableCustomButtons(count,"Table " + QString::number(count),myParent);
                 qDebug() << "tableList (setButton) : btn name " << btn->getText() ;

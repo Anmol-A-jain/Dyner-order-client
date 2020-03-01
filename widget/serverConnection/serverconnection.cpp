@@ -8,7 +8,6 @@ serverConnection::serverConnection(QWidget *parent) :
     ui(new Ui::serverConnection)
 {
     ui->setupUi(this);
-    ui->btnLogin->hide();
     myParent = parent;
 
     connect(serverSocket::serverClient,&QTcpSocket::stateChanged,this,&serverConnection::stateChanged);
@@ -35,6 +34,12 @@ serverConnection::~serverConnection()
     delete ui;
 }
 
+void serverConnection::connectToServer(QString ip)
+{
+    serverSocket* s = new serverSocket(myParent);
+    s->connectToSerever(ip);
+}
+
 void serverConnection::on_btnConnect_clicked()
 {
     qDebug() << "serverConnection (on_btnConnect_clicked) : state : " << serverSocket::serverClient->state() ;
@@ -46,8 +51,7 @@ void serverConnection::on_btnConnect_clicked()
         ui->lblStatus->setText("Connected");
         return;
     }
-    serverSocket* s = new serverSocket(myParent);
-    s->connectToSerever(ui->txtIp->text());
+    this->connectToServer(ui->txtIp->text());
 
     if(serverSocket::serverClient->state() != QTcpSocket::ConnectingState || serverSocket::serverClient->state() != QTcpSocket::ConnectedState)
     {
@@ -93,30 +97,12 @@ void serverConnection::on_btnauto_clicked()
 
     for(int i = 0; i <= 255; i++)
     {
-         QString currIp = (baseNetowrk + "%1").arg(i);
+        QString currIp = (baseNetowrk + "%1").arg(i);
 
-         findByPing* f = new findByPing(currIp);
-
-         f->start();
+        findByPing* f = new findByPing(currIp,this);
+        connect(f, SIGNAL(finished()), f, SLOT(deleteLater()));
+        f->start();
     }
-    ui->btnLogin->show();
-    ui->btnauto->hide();
 }
 
-void serverConnection::on_btnLogin_clicked()
-{
-    GlobalData g;
-    QString ip = XmlManipulation::getData(g.getTagName(g.ipAddress),g.getattribute(g.ipAddress));
 
-    if(ip != "")
-    {
-        serverSocket* s = new serverSocket(myParent);
-        s->connectToSerever(ip);
-        qDebug() << "serverConnection (on_btnLogin_clicked) : ip address : " << ip;
-        return;
-    }
-
-    ui->lblStatus->setText("Server not found");
-    ui->btnLogin->hide();
-    ui->btnauto->show();
-}

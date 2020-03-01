@@ -33,7 +33,12 @@ void serverSocket::myReadReady()
 {
     QString data = serverClient->readAll();
 
+
     QStringList list = data.split('~');
+    if(list.size() == 1)
+    {
+        return;
+    }
 
     bool isFirst = true;
     QStringList dataList ;
@@ -72,7 +77,7 @@ void serverSocket::myReadReady()
         {
             for(int i = 0 ; i < list.size() ; ++i)
             {
-                QString value = dataList.at(0);
+                QString value = dataList.first();
                 qDebug() << "serverConnection (myReadReady) : total Table no : " << value;
                 int tbl = value.toInt();
                 static_cast<DynerAndroid*>(myParent)->dinningTableList(tbl);
@@ -89,9 +94,10 @@ void serverSocket::myReadReady()
 
 void serverSocket::myConnected()
 {
-    qDebug() << "serverConnection (myConnected) :  : " << serverSocket::serverClient->state() ;
-    qDebug() << "serverConnection (myConnected) :  : " << serverSocket::serverClient->peerAddress() ;
+    qDebug() << "serverConnection (myConnected) : state : " << serverSocket::serverClient->state() ;
+    qDebug() << "serverConnection (myConnected) : ip address : " << serverSocket::serverClient->peerAddress() ;
     QByteArray data = serverSocket::setAction(ALLAction::getTotaltableNo,"");
+    qDebug() << "serverConnection (myConnected) : data to send : " << data ;
     //sending req for total table count
     serverSocket::serverClient->write(data);
 }
@@ -101,6 +107,6 @@ void serverSocket::myDisconnect()
     GlobalData g;
     XmlManipulation::setData(g.getTagName(g.ipAddress),g.getattribute(g.ipAddress),"");
 
-    static_cast<DynerAndroid*>(myParent)->closeWidget();
-    qDebug() << "serverConnection (myDiconnected) :  : " << serverSocket::serverClient->state() ;
+    static_cast<DynerAndroid*>(myParent)->logInWidget();
+    qDebug() << "serverConnection (myDiconnected) : state : " << serverSocket::serverClient->state() ;
 }
