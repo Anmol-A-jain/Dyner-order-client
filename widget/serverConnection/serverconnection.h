@@ -76,6 +76,8 @@ public slots :
         socket->disconnectFromHost();
         qDebug() << "findByPing (myConnected) : state : " << socket->state() ;
 
+        //exit(0);
+
     }
     void mystateChange(QAbstractSocket::SocketState state)
     {

@@ -17,7 +17,7 @@ void serverSocket::connectToSerever(QString ip)
 {
     connect(serverClient,&QTcpSocket::readyRead,this,&serverSocket::myReadReady,Qt::DirectConnection);
     connect(serverClient,&QTcpSocket::connected,this,&serverSocket::myConnected,Qt::DirectConnection);
-    connect(serverClient,&QTcpSocket::disconnected,this,&serverSocket::myDisconnect,Qt::DirectConnection);
+    connect(serverClient,&QTcpSocket::disconnected,this,&serverSocket::myDisconnect);
     serverClient->connectToHost(ip,1812);
 }
 
