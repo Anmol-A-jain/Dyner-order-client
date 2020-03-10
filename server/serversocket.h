@@ -11,7 +11,7 @@ public:
     serverSocket(QWidget* parent);
     void connectToSerever(QString ip);
     static QTcpSocket* serverClient;
-    static QByteArray setAction(int action,QByteArray data);
+    static QString setAction(int action,QByteArray data);
 
 public slots:
     void myReadReady();
@@ -23,6 +23,7 @@ public slots:
 
 private:
     QWidget* myParent;
+    qint16 tblNo;
 };
 
 #endif // SERVERSOCKET_H

@@ -73,7 +73,7 @@ public slots :
         XmlManipulation::setData(g.getTagName(g.ipAddress),g.getattribute(g.ipAddress),socket->peerAddress().toString());
         qDebug() << "serverConnection (myConnected) : ip address : " << socket->peerAddress().toString() ;*/
 
-        socket->disconnectFromHost();
+        //socket->deleteLater();
         qDebug() << "findByPing (myConnected) : state : " << socket->state() ;
 
         //exit(0);

@@ -1,6 +1,7 @@
 #include "tablecustombuttons.h"
 #include "ui_tablecustombuttons.h"
 #include "dynerandroid.h"
+#include "data/globaldata.h"
 
 TableCustomButtons::TableCustomButtons(int tbl,QString name,QWidget *parent) :
     QWidget(parent),
@@ -10,6 +11,11 @@ TableCustomButtons::TableCustomButtons(int tbl,QString name,QWidget *parent) :
     myParent = parent;
     ui->btnTable->setText(name);
     this->tbl = tbl;
+
+    QString title = "Table List";
+    static_cast<DynerAndroid*>(myParent)->setTitle(title);
+
+    GlobalData::setShadow(this);
 }
 
 TableCustomButtons::~TableCustomButtons()

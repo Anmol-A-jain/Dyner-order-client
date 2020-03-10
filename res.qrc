@@ -9,5 +9,7 @@
         <file>img/background3.jpg</file>
         <file>img/menuIcon.png</file>
         <file>img/home-icon.png</file>
+        <file>img/background2.png</file>
+        <file>img/logo.png</file>
     </qresource>
 </RCC>

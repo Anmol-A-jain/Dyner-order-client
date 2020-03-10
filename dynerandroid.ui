@@ -14,12 +14,14 @@
    <string>DynerAndroid</string>
   </property>
   <property name="styleSheet">
-   <string notr="true"/>
+   <string notr="true">#DynerAndroid{
+	background-color: rgb(0, 0, 0);
+}</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <property name="styleSheet">
     <string notr="true">#centralwidget{
-	border-image: url(:/img/img/background2.jpg);
+	border-image: url(:/img/img/background2.png);
 }</string>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -42,7 +44,8 @@
      <widget class="QWidget" name="mainWindow" native="true">
       <property name="styleSheet">
        <string notr="true">#mainWindow{
-		background-color: rgba(238, 238, 236,0.5);
+		background-color: rgba(100, 100, 100,0.5);
+	background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:1, y2:0, stop:0 rgba(0, 0, 0,0.5), stop:1 rgba(100, 100, 100,0.5));
 }</string>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout">
@@ -66,7 +69,7 @@
          <property name="minimumSize">
           <size>
            <width>0</width>
-           <height>70</height>
+           <height>0</height>
           </size>
          </property>
          <property name="maximumSize">
@@ -76,12 +79,24 @@
           </size>
          </property>
          <property name="styleSheet">
-          <string notr="true">horizontalWidget{
-	border-radius:10px;
-	background-color:   qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0 rgba(227, 171, 122, 1), stop:1 rgba(192, 130, 79, 1))
-}</string>
+          <string notr="true">border-bottom: 2px silid rgb(0, 0, 0);</string>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout">
+          <property name="spacing">
+           <number>6</number>
+          </property>
+          <property name="leftMargin">
+           <number>10</number>
+          </property>
+          <property name="topMargin">
+           <number>10</number>
+          </property>
+          <property name="rightMargin">
+           <number>10</number>
+          </property>
+          <property name="bottomMargin">
+           <number>10</number>
+          </property>
           <item>
            <widget class="QPushButton" name="btnHome">
             <property name="minimumSize">
@@ -92,12 +107,11 @@
             </property>
             <property name="font">
              <font>
-              <pointsize>20</pointsize>
+              <pointsize>28</pointsize>
              </font>
             </property>
             <property name="styleSheet">
              <string notr="true">background-color: rgba(0, 0, 0, 0);
-border:2px solid white;
 border-radius:10px;</string>
             </property>
             <property name="text">
@@ -134,7 +148,7 @@ border-radius:10px;</string>
            <widget class="QLabel" name="widgetTitle">
             <property name="minimumSize">
              <size>
-              <width>70</width>
+              <width>100</width>
               <height>50</height>
              </size>
             </property>
@@ -154,7 +168,7 @@ border-radius:10px;</string>
              <string notr="true">#widgetTitle
 {
 	color:;
-	color: rgb(86, 86, 86);
+	color: white;
 	font: 20pt &quot;MS Shell Dlg 2&quot;;
 	border-radius:10px;
 }</string>
@@ -182,6 +196,23 @@ border-radius:10px;</string>
              </size>
             </property>
            </spacer>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButton">
+            <property name="minimumSize">
+             <size>
+              <width>50</width>
+              <height>50</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgba(0, 0, 0, 0);
+border-radius:10px;</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
           </item>
          </layout>
         </widget>
@@ -214,7 +245,20 @@ border-radius:10px;</string>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_4">
              <item>
-              <layout class="QVBoxLayout" name="windowContainer"/>
+              <layout class="QVBoxLayout" name="windowContainer">
+               <property name="leftMargin">
+                <number>9</number>
+               </property>
+               <property name="topMargin">
+                <number>9</number>
+               </property>
+               <property name="rightMargin">
+                <number>9</number>
+               </property>
+               <property name="bottomMargin">
+                <number>9</number>
+               </property>
+              </layout>
              </item>
             </layout>
            </widget>

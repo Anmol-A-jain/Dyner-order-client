@@ -21,7 +21,7 @@ void serverSocket::connectToSerever(QString ip)
     serverClient->connectToHost(ip,1812);
 }
 
-QByteArray serverSocket::setAction(int action, QByteArray data)
+QString serverSocket::setAction(int action, QByteArray data)
 {
     QByteArray msg = QByteArray::number(action) + "~";
     msg.append(data);
@@ -31,7 +31,62 @@ QByteArray serverSocket::setAction(int action, QByteArray data)
 
 void serverSocket::myReadReady()
 {
-    QString data = serverClient->readAll();
+    // get the information
+    QByteArray dataIn = serverClient->readAll();
+    qDebug() << "serverConnection (myReadReady) : Data in: " << dataIn;
+
+    QDataStream in(&dataIn,QIODevice::ReadWrite);
+
+    qint16 action;
+    in >> action;
+
+    qDebug() << "serverConnection (myReadReady) : action : " << action;
+
+    switch (action)
+    {
+        case ALLAction::error :
+        {
+            qDebug() << "serverConnection (myReadReady) : list : " << dataIn;
+            break;
+        }
+        case ALLAction::getTotaltableNo :
+        {
+            qint16 tblNo;
+            in >> tblNo;
+            qDebug() << "serverConnection (myReadReady) : total Table no : " << tblNo;
+
+            static_cast<DynerAndroid*>(myParent)->dinningTableList(tblNo);
+
+            break;
+
+        }
+        case ALLAction::menuData :
+        {
+
+            qint16 count = 0;
+
+            in >> count;
+
+            for(int i = 0;count > i ; ++i)
+            {
+                QString id,name,category;
+                double price;
+                in >> id >> name >> category >> price;
+                GlobalData::setMendsduItem(id,name,category,price);
+                qDebug() << endl<< "serverConnection (myReadReady) : id : " << GlobalData::menuDataList.last()->id ;
+                qDebug() << "serverConnection (myReadReady) : name : " << GlobalData::menuDataList.last()->name ;
+                qDebug() << "serverConnection (myReadReady) : category : " << GlobalData::menuDataList.last()->category ;
+                qDebug() << "serverConnection (myReadReady) : price : " << GlobalData::menuDataList.last()->price << endl ;
+            }
+            break;
+        }
+        default:
+        {
+            qDebug() << "serverConnection (myReadReady) : default case called : " << dataIn;
+        }
+    }
+
+    /*QString data = serverClient->readAll();
 
 
     QStringList list = data.split('~');
@@ -89,17 +144,29 @@ void serverSocket::myReadReady()
             qDebug() << "serverConnection (myReadReady) : default case called : " << data;
             break;
         }
-    }
+    }*/
 }
 
 void serverSocket::myConnected()
 {
     qDebug() << "serverConnection (myConnected) : state : " << serverSocket::serverClient->state() ;
     qDebug() << "serverConnection (myConnected) : ip address : " << serverSocket::serverClient->peerAddress() ;
-    QByteArray data = serverSocket::setAction(ALLAction::getTotaltableNo,"");
+    QByteArray data ;
+    QDataStream out(&data,QIODevice::ReadWrite);
+    qint16 i = ALLAction::getTotaltableNo;
+    out << i ;
     qDebug() << "serverConnection (myConnected) : data to send : " << data ;
     //sending req for total table count
     serverSocket::serverClient->write(data);
+    serverSocket::serverClient->waitForReadyRead(2000);
+
+    QByteArray data1 ;
+    QDataStream out1(&data1,QIODevice::ReadWrite);
+    i = ALLAction::menuData;
+    out1 << i ;
+    qDebug() << "DynerAndroid (dinningTableList) : data to send : " << data1 ;
+    //sending req for total table count
+    serverSocket::serverClient->write(data1);
 }
 
 void serverSocket::myDisconnect()
@@ -107,6 +174,6 @@ void serverSocket::myDisconnect()
     GlobalData g;
     XmlManipulation::setData(g.getTagName(g.ipAddress),g.getattribute(g.ipAddress),"");
 
-    static_cast<DynerAndroid*>(myParent)->logInWidget();
+    static_cast<DynerAndroid*>(myParent)->closeWidget();
     qDebug() << "serverConnection (myDiconnected) : state : " << serverSocket::serverClient->state() ;
 }

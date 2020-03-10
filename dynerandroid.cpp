@@ -1,8 +1,10 @@
+#include <QDebug>
+#include <QKeyEvent>
 #include "dynerandroid.h"
 #include "ui_dynerandroid.h"
 #include "widget/serverConnection/serverconnection.h"
-#include <QDebug>
 #include "data/allaction.h"
+#include "data/globaldata.h"
 #include "widget/tableList/tablelist.h"
 #include "widget/Cart/cart.h"
 #include "widget/CloseWindow/closewindow.h"
@@ -19,6 +21,7 @@ DynerAndroid::DynerAndroid(QWidget *parent)
     ui->windowContainer->addWidget(childFrame);
 
     ui->btnHome->hide();
+    ui->pushButton->hide();
 }
 
 DynerAndroid::~DynerAndroid()
@@ -33,26 +36,39 @@ QWidget* DynerAndroid::newWindow(int option,int tblNo)
         case serverConnectionWindow :
         {
             ui->btnHome->hide();
-            return new serverConnection(this);
+            ui->pushButton->hide();
+            logWindow = new serverConnection(this);
+            return logWindow;
             break;
         }
         case cartWindow:
         {
             ui->btnHome->show();
-            if(tblNo != 0) return new Cart(tblNo,this);
+            ui->pushButton->show();
+            if(tblNo != 0)
+            {
+                cart = new Cart(tblNo,this);
+                return cart;
+            }
             break;
         }
 
         case tableListWindow :
         {
             ui->btnHome->show();
-            if(tbl != 0) return new tableList(tbl,this);
+            ui->pushButton->show();
+            if(tbl != 0)
+            {
+                tableButtons = new tableList(tbl,this);
+                return tableButtons;
+            }
             break;
         }
         case closeWindowWidget :
         {
             ui->btnHome->hide();
-            return new CloseWindow();
+            ui->pushButton->hide();
+            return new CloseWindow(this);
             break;
         }
     }
@@ -62,7 +78,8 @@ QWidget* DynerAndroid::newWindow(int option,int tblNo)
 void DynerAndroid::dinningTableList(int tbl)
 {
     this->tbl = tbl;
-    childFrame->deleteLater();
+    //childFrame->deleteLater();
+    delete childFrame;
     tableButtons = newWindow(widgetWindow::tableListWindow);
     childFrame = tableButtons;
     ui->windowContainer->addWidget(childFrame);
@@ -70,7 +87,8 @@ void DynerAndroid::dinningTableList(int tbl)
 
 void DynerAndroid::cartWidgetWindow(int tblNo)
 {
-    childFrame->deleteLater();
+    //childFrame->deleteLater();
+    delete childFrame;
     cart = newWindow(widgetWindow::cartWindow,tblNo);
     childFrame = cart;
     ui->windowContainer->addWidget(childFrame);
@@ -78,7 +96,8 @@ void DynerAndroid::cartWidgetWindow(int tblNo)
 
 void DynerAndroid::logInWidget()
 {
-    childFrame->deleteLater();
+    delete childFrame;
+    //childFrame->deleteLater();
     logWindow = newWindow(widgetWindow::serverConnectionWindow);
     childFrame = logWindow ;
     ui->windowContainer->addWidget(childFrame);
@@ -86,9 +105,15 @@ void DynerAndroid::logInWidget()
 
 void DynerAndroid::closeWidget()
 {
-    childFrame->deleteLater();
+    delete childFrame;
+    //childFrame->deleteLater();
     childFrame = newWindow(widgetWindow::closeWindowWidget);
     ui->windowContainer->addWidget(childFrame);
+}
+
+void DynerAndroid::setTitle(QString title)
+{
+    ui->widgetTitle->setText(title);
 }
 
 void DynerAndroid::on_btnHome_clicked()
@@ -97,4 +122,20 @@ void DynerAndroid::on_btnHome_clicked()
     {
         this->dinningTableList(tbl);
     }
+}
+
+// overriding back button functioning
+void DynerAndroid::keyPressEvent(QKeyEvent *event)
+{
+    if(event->key() == Qt::Key_Back )
+    {
+        qDebug() << "DynerAndroid (keyPressEvent) : back_Button pressed";
+        if(childFrame == cart)
+        {
+            this->dinningTableList(this->tbl);
+            return;
+        }
+        return;
+    }
+    event->accept();
 }

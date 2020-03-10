@@ -6,7 +6,7 @@ class ALLAction
 {
 public:
     ALLAction();
-    enum action{error,getTotaltableNo};
+    enum action{error,getTotaltableNo,menuData};
 };
 
 #endif // ALLACTION_H

@@ -20,6 +20,8 @@ public:
     void cartWidgetWindow(int tblNo);
     void logInWidget();
     void closeWidget();
+    void setTitle(QString title);
+    void keyPressEvent(QKeyEvent* event) override;
 
 private slots:
     void on_btnHome_clicked();

@@ -2,6 +2,7 @@
 #include "dynerandroid.h"
 #include "ui_serverconnection.h"
 #include <QDebug>
+#include "data/globaldata.h"
 
 serverConnection::serverConnection(QWidget *parent) :
     QWidget(parent),
@@ -9,6 +10,9 @@ serverConnection::serverConnection(QWidget *parent) :
 {
     ui->setupUi(this);
     myParent = parent;
+
+    QString title = "Log In";
+    static_cast<DynerAndroid*>(myParent)->setTitle(title);
 
     connect(serverSocket::serverClient,&QTcpSocket::stateChanged,this,&serverConnection::stateChanged);
 
@@ -27,6 +31,8 @@ serverConnection::serverConnection(QWidget *parent) :
             ui->txtIp->setText(baseIp);
         }
     }
+    GlobalData::setShadow(ui->icon);
+
 }
 
 serverConnection::~serverConnection()

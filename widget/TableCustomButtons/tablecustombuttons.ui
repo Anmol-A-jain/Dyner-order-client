@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>423</width>
-    <height>336</height>
+    <width>397</width>
+    <height>222</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -46,8 +46,8 @@
       <widget class="QPushButton" name="btnTable">
        <property name="minimumSize">
         <size>
-         <width>200</width>
-         <height>150</height>
+         <width>150</width>
+         <height>115</height>
         </size>
        </property>
        <property name="font">
@@ -77,10 +77,13 @@
        <property name="orientation">
         <enum>Qt::Vertical</enum>
        </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
        <property name="sizeHint" stdset="0">
         <size>
          <width>20</width>
-         <height>40</height>
+         <height>10</height>
         </size>
        </property>
       </spacer>
@@ -90,10 +93,13 @@
        <property name="orientation">
         <enum>Qt::Vertical</enum>
        </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
        <property name="sizeHint" stdset="0">
         <size>
          <width>20</width>
-         <height>40</height>
+         <height>10</height>
         </size>
        </property>
       </spacer>

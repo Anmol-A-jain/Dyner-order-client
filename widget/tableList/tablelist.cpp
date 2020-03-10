@@ -8,6 +8,7 @@
 #include <QScroller>
 #include <QScrollBar>
 #include <QAbstractItemView>
+#include "data/globaldata.h"
 
 tableList::tableList(int tbl,QWidget *parent) :
     QWidget(parent),
@@ -22,6 +23,9 @@ tableList::tableList(int tbl,QWidget *parent) :
     scrollArea->verticalScrollBar()->setStyleSheet("QScrollBar {width:10px;}");
     QScroller::grabGesture(scrollArea, QScroller::TouchGesture);
     setButton();
+
+
+    GlobalData::setShadow(this);
 }
 
 tableList::~tableList()
@@ -37,7 +41,7 @@ void tableList::setButton()
 
     QGridLayout* layout = ui->btnList;
 
-    qDebug() << "tableList (setButton) : row%column " << row%column ;
+    qDebug() << "tableList (setButton) : row%column " << (double) (row%column) ;
     qDebug() << "tableList (setButton) : row " << row ;
     qDebug() << "tableList (setButton) : table " << tbl ;
 

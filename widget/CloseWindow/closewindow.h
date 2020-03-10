@@ -21,6 +21,7 @@ private slots:
 
 private:
     Ui::CloseWindow *ui;
+    QWidget* myParent;
 };
 
 #endif // CLOSEWINDOW_H

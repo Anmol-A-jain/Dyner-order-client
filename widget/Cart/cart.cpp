@@ -1,5 +1,6 @@
 #include "cart.h"
 #include "ui_cart.h"
+#include "dynerandroid.h"
 
 Cart::Cart(int tbl,QWidget *parent) :
     QWidget(parent),
@@ -8,7 +9,8 @@ Cart::Cart(int tbl,QWidget *parent) :
     ui->setupUi(this);
     this->tbl = tbl;
     myParent = parent;
-    ui->label->setText(QString::number(tbl));
+    QString title = "Table";
+    static_cast<DynerAndroid*>(myParent)->setTitle(title +" : "+ QString::number(tbl));
 }
 
 Cart::~Cart()
