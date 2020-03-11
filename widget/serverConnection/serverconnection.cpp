@@ -98,9 +98,6 @@ void serverConnection::on_btnauto_clicked()
 
     QString baseNetowrk = baseIp;
 
-    GlobalData g;
-    XmlManipulation::setData(g.getTagName(g.ipAddress),g.getattribute(g.ipAddress),"");
-
     for(int i = 0; i <= 255; i++)
     {
         QString currIp = (baseNetowrk + "%1").arg(i);

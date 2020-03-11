@@ -32,6 +32,7 @@ private:
     QWidget* logWindow;
     QWidget* tableButtons;
     QWidget* cart;
+    QWidget* closeWindow;
     int tbl;
     enum widgetWindow{serverConnectionWindow,cartWindow,tableListWindow,closeWindowWidget};
 

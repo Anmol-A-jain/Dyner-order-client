@@ -16,9 +16,6 @@ class GlobalData
 {
 public:
     GlobalData();
-    QString getTagName(int tagname);
-    QString getattribute(int tagname);
-    enum data{ipAddress};
 
     //shadow effect function
     static void setShadow(QWidget* widget);

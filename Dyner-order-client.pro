@@ -18,7 +18,6 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     data/allaction.cpp \
     data/globaldata.cpp \
-    data/xmlmanipulation.cpp \
     main.cpp \
     dynerandroid.cpp \
     server/serversocket.cpp \
@@ -31,7 +30,6 @@ SOURCES += \
 HEADERS += \
     data/allaction.h \
     data/globaldata.h \
-    data/xmlmanipulation.h \
     dynerandroid.h \
     server/serversocket.h \
     widget/Cart/cart.h \

@@ -8,7 +8,6 @@
 #include <QHostInfo>
 #include <QComboBox>
 #include "server/serversocket.h"
-#include "data/xmlmanipulation.h"
 #include "data/globaldata.h"
 
 class findByPing;
@@ -68,16 +67,7 @@ public slots :
     {
         static_cast<serverConnection*>(myParent)->connectToServer(currIp);
 
-        //serverSocket::serverClient = socket;
-        /*GlobalData g;
-        XmlManipulation::setData(g.getTagName(g.ipAddress),g.getattribute(g.ipAddress),socket->peerAddress().toString());
-        qDebug() << "serverConnection (myConnected) : ip address : " << socket->peerAddress().toString() ;*/
-
-        //socket->deleteLater();
         qDebug() << "findByPing (myConnected) : state : " << socket->state() ;
-
-        //exit(0);
-
     }
     void mystateChange(QAbstractSocket::SocketState state)
     {

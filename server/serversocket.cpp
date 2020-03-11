@@ -3,7 +3,6 @@
 #include "widget/serverConnection/serverconnection.h"
 #include "data/allaction.h"
 #include "data/globaldata.h"
-#include "data/xmlmanipulation.h"
 #include "dynerandroid.h"
 
 QTcpSocket* serverSocket::serverClient = new QTcpSocket();
@@ -67,7 +66,8 @@ void serverSocket::myReadReady()
 
             in >> count;
 
-            for(int i = 0;count > i ; ++i)
+            int i = 0;
+            for(i = 0;count > i ; ++i)
             {
                 QString id,name,category;
                 double price;
@@ -78,6 +78,8 @@ void serverSocket::myReadReady()
                 qDebug() << "serverConnection (myReadReady) : category : " << GlobalData::menuDataList.last()->category ;
                 qDebug() << "serverConnection (myReadReady) : price : " << GlobalData::menuDataList.last()->price << endl ;
             }
+            qDebug() << "serverConnection (myReadReady) : Total Item : " << i;
+
             break;
         }
         default:
@@ -171,9 +173,6 @@ void serverSocket::myConnected()
 
 void serverSocket::myDisconnect()
 {
-    GlobalData g;
-    XmlManipulation::setData(g.getTagName(g.ipAddress),g.getattribute(g.ipAddress),"");
-
     static_cast<DynerAndroid*>(myParent)->closeWidget();
     qDebug() << "serverConnection (myDiconnected) : state : " << serverSocket::serverClient->state() ;
 }

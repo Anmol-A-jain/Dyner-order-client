@@ -23,7 +23,6 @@ public slots:
 
 private:
     QWidget* myParent;
-    qint16 tblNo;
 };
 
 #endif // SERVERSOCKET_H
