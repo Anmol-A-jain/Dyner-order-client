@@ -14,6 +14,10 @@ class Cart : public QWidget
 public:
     explicit Cart(int tbl,QWidget *parent = nullptr);
     ~Cart();
+    int getTblNo();
+
+private slots:
+    void on_pushButton_clicked();
 
 private:
     Ui::Cart *ui;

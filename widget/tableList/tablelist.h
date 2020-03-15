@@ -1,7 +1,7 @@
 #ifndef TABLELIST_H
 #define TABLELIST_H
 
-#include <QWidget>
+#include <QMainWindow>
 
 namespace Ui {
 class tableList;

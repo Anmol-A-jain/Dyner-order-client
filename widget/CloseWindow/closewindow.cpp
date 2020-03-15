@@ -1,16 +1,15 @@
 #include "closewindow.h"
 #include "ui_closewindow.h"
-#include "dynerandroid.h"
 #include <QApplication>
 
-CloseWindow::CloseWindow(QWidget *parent) :
+CloseWindow::CloseWindow(QLabel *lblTitle,QWidget *parent) :
     QWidget(parent),
     ui(new Ui::CloseWindow)
 {
     ui->setupUi(this);
 
     QString title = "Disconnected";
-    static_cast<DynerAndroid*>(myParent)->setTitle(title);
+    lblTitle->setText(title);
 }
 
 CloseWindow::~CloseWindow()

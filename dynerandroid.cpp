@@ -1,5 +1,7 @@
 #include <QDebug>
 #include <QKeyEvent>
+#include <QMessageBox>
+#include <QtAndroidExtras>
 #include "dynerandroid.h"
 #include "ui_dynerandroid.h"
 #include "widget/serverConnection/serverconnection.h"
@@ -68,7 +70,7 @@ QWidget* DynerAndroid::newWindow(int option,int tblNo)
         {
             ui->btnHome->hide();
             ui->pushButton->hide();
-            return new CloseWindow(this);
+            return new CloseWindow(ui->widgetTitle);
             break;
         }
     }
@@ -78,43 +80,59 @@ QWidget* DynerAndroid::newWindow(int option,int tblNo)
 void DynerAndroid::dinningTableList(int tbl)
 {
     this->tbl = tbl;
-    delete childFrame;
+    QWidget* temp = childFrame;
     //childFrame->deleteLater();
     tableButtons = newWindow(widgetWindow::tableListWindow);
     childFrame = tableButtons;
     ui->windowContainer->addWidget(childFrame);
+    delete temp;
 }
 
 void DynerAndroid::cartWidgetWindow(int tblNo)
 {
-    delete childFrame;
+    QWidget* temp = childFrame;
     //childFrame->deleteLater();
     cart = newWindow(widgetWindow::cartWindow,tblNo);
     childFrame = cart;
     ui->windowContainer->addWidget(childFrame);
+    delete temp;
 }
 
 void DynerAndroid::logInWidget()
 {
-    delete childFrame;
+    QWidget* temp = childFrame;
     //childFrame->deleteLater();
     logWindow = newWindow(widgetWindow::serverConnectionWindow);
     childFrame = logWindow ;
     ui->windowContainer->addWidget(childFrame);
+    delete temp;
 }
 
 void DynerAndroid::closeWidget()
 {
-    delete childFrame;
+    QMessageBox::StandardButton reply = QMessageBox::critical(this,"Diconnected","Server has been disconnected,\n App will exit",QMessageBox::Ok);
+    if(reply == QMessageBox::Ok)
+        qApp->exit(0);
+
+    /*
+    //delete childFrame;
+    QWidget* temp = childFrame;
     //childFrame->deleteLater();
     closeWindow = newWindow(widgetWindow::closeWindowWidget);
     childFrame = closeWindow ;
     ui->windowContainer->addWidget(childFrame);
+    delete temp;
+    */
 }
 
 void DynerAndroid::setTitle(QString title)
 {
     ui->widgetTitle->setText(title);
+}
+
+void DynerAndroid::ChangeBoolvalue(bool value)
+{
+    isExiting = value;
 }
 
 void DynerAndroid::on_btnHome_clicked()
@@ -135,6 +153,43 @@ void DynerAndroid::keyPressEvent(QKeyEvent *event)
         {
             this->dinningTableList(this->tbl);
             return;
+        }
+        if(childFrame == tableButtons)
+        {
+            if(isExiting)
+            {
+                qDebug() << "DynerAndroid (keyPressEvent) : isExiting" << isExiting;
+                qApp->exit(0);
+            }
+            QString message = "Press again to Exit";
+            int duration =2000;
+            QtAndroid::runOnAndroidThread([message, duration ] {
+                QAndroidJniObject javaString = QAndroidJniObject::fromString(message);
+                QAndroidJniObject toast = QAndroidJniObject::callStaticObjectMethod("android/widget/Toast", "makeText",
+                                                                                    "(Landroid/content/Context;Ljava/lang/CharSequence;I)Landroid/widget/Toast;",
+                                                                                    QtAndroid::androidActivity().object(),
+                                                                                    javaString.object(),
+                                                                                    jint(duration));
+                toast.callMethod<void>("show");
+            });
+            ChangeBoolvalue(true);
+
+            class ExitThread : public QThread
+            {
+
+                public:
+                    DynerAndroid* myParent;
+                    void run()
+                    {
+                        sleep(2);
+                        myParent->ChangeBoolvalue(false);
+                    }
+                    ExitThread(DynerAndroid *parent)
+                    {
+                        myParent = parent;
+                    }
+            };
+            (new ExitThread(this))->start();
         }
         return;
     }

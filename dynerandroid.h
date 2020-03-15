@@ -11,6 +11,7 @@ class DynerAndroid : public QMainWindow
 {
     Q_OBJECT
 
+
 public:
     DynerAndroid(QWidget *parent = nullptr);
     ~DynerAndroid();
@@ -21,6 +22,7 @@ public:
     void logInWidget();
     void closeWidget();
     void setTitle(QString title);
+    void ChangeBoolvalue(bool value);
     void keyPressEvent(QKeyEvent* event) override;
 
 private slots:
@@ -34,6 +36,8 @@ private:
     QWidget* cart;
     QWidget* closeWindow;
     int tbl;
+
+    bool isExiting;
     enum widgetWindow{serverConnectionWindow,cartWindow,tableListWindow,closeWindowWidget};
 
 };

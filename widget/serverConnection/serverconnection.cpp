@@ -4,6 +4,8 @@
 #include <QDebug>
 #include "data/globaldata.h"
 
+QVector<findByPing*> serverConnection::threadList;
+
 serverConnection::serverConnection(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::serverConnection)
@@ -44,6 +46,15 @@ void serverConnection::connectToServer(QString ip)
 {
     serverSocket* s = new serverSocket(myParent);
     s->connectToSerever(ip);
+}
+
+void serverConnection::deleteAllThread()
+{
+    for(int i = 0; i < threadList.size(); ++i)
+    {
+        threadList[i]->exit(0);
+    }
+    qDebug() << "serverConnection (deleteAllThread) : deleted thread all thread =";
 }
 
 void serverConnection::on_btnConnect_clicked()
@@ -103,9 +114,11 @@ void serverConnection::on_btnauto_clicked()
         QString currIp = (baseNetowrk + "%1").arg(i);
 
         findByPing* f = new findByPing(currIp,this);
-        connect(f, SIGNAL(finished()), f, SLOT(deleteLater()));
         f->start();
+        serverConnection::threadList.push_back(f);
     }
+    ui->btnauto->hide();
+    ui->label_2->hide();
 }
 
 

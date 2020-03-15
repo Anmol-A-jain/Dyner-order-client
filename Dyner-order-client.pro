@@ -1,4 +1,4 @@
-QT       += core gui network xml
+QT       += core gui network xml androidextras
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -21,7 +21,9 @@ SOURCES += \
     main.cpp \
     dynerandroid.cpp \
     server/serversocket.cpp \
+    widget/Cart/DialogBox/addorderitem.cpp \
     widget/Cart/cart.cpp \
+    widget/Cart/customWidget/orderitemdata.cpp \
     widget/CloseWindow/closewindow.cpp \
     widget/TableCustomButtons/tablecustombuttons.cpp \
     widget/serverConnection/serverconnection.cpp \
@@ -32,7 +34,9 @@ HEADERS += \
     data/globaldata.h \
     dynerandroid.h \
     server/serversocket.h \
+    widget/Cart/DialogBox/addorderitem.h \
     widget/Cart/cart.h \
+    widget/Cart/customWidget/orderitemdata.h \
     widget/CloseWindow/closewindow.h \
     widget/TableCustomButtons/tablecustombuttons.h \
     widget/serverConnection/serverconnection.h \
@@ -40,7 +44,9 @@ HEADERS += \
 
 FORMS += \
     dynerandroid.ui \
+    widget/Cart/DialogBox/addorderitem.ui \
     widget/Cart/cart.ui \
+    widget/Cart/customWidget/orderitemdata.ui \
     widget/CloseWindow/closewindow.ui \
     widget/TableCustomButtons/tablecustombuttons.ui \
     widget/serverConnection/serverconnection.ui \

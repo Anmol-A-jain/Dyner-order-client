@@ -11,7 +11,6 @@ public:
     serverSocket(QWidget* parent);
     void connectToSerever(QString ip);
     static QTcpSocket* serverClient;
-    static QString setAction(int action,QByteArray data);
 
 public slots:
     void myReadReady();

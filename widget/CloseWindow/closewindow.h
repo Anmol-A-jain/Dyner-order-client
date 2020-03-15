@@ -2,6 +2,7 @@
 #define CLOSEWINDOW_H
 
 #include <QWidget>
+#include <QLabel>
 
 namespace Ui {
 class CloseWindow;
@@ -12,7 +13,7 @@ class CloseWindow : public QWidget
     Q_OBJECT
 
 public:
-    explicit CloseWindow(QWidget *parent = nullptr);
+    explicit CloseWindow(QLabel *lblTitle,QWidget *parent = nullptr);
     ~CloseWindow();
 
 private slots:
@@ -21,7 +22,6 @@ private slots:
 
 private:
     Ui::CloseWindow *ui;
-    QWidget* myParent;
 };
 
 #endif // CLOSEWINDOW_H

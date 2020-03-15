@@ -1,5 +1,6 @@
 #include "serversocket.h"
 #include <QDebug>
+#include <QMessageBox>
 #include "widget/serverConnection/serverconnection.h"
 #include "data/allaction.h"
 #include "data/globaldata.h"
@@ -14,18 +15,10 @@ serverSocket::serverSocket(QWidget* parent)
 
 void serverSocket::connectToSerever(QString ip)
 {
-    connect(serverClient,&QTcpSocket::readyRead,this,&serverSocket::myReadReady,Qt::DirectConnection);
+    connect(serverClient,&QTcpSocket::readyRead,this,&serverSocket::myReadReady);
     connect(serverClient,&QTcpSocket::connected,this,&serverSocket::myConnected,Qt::DirectConnection);
     connect(serverClient,&QTcpSocket::disconnected,this,&serverSocket::myDisconnect);
     serverClient->connectToHost(ip,1812);
-}
-
-QString serverSocket::setAction(int action, QByteArray data)
-{
-    QByteArray msg = QByteArray::number(action) + "~";
-    msg.append(data);
-    qDebug() << "serverSocket (setAction) : data =" << msg;
-    return msg;
 }
 
 void serverSocket::myReadReady()
@@ -85,6 +78,9 @@ void serverSocket::myReadReady()
         default:
         {
             qDebug() << "serverConnection (myReadReady) : default case called : " << dataIn;
+            QMessageBox::StandardButton reply = QMessageBox::critical(new QWidget,"Diconnected","Server has been disconnected,\n App will exit",QMessageBox::Ok);
+            if(reply == QMessageBox::Ok)
+                qApp->exit(0);
         }
     }
 
@@ -151,6 +147,7 @@ void serverSocket::myReadReady()
 
 void serverSocket::myConnected()
 {
+    serverConnection::deleteAllThread();
     qDebug() << "serverConnection (myConnected) : state : " << serverSocket::serverClient->state() ;
     qDebug() << "serverConnection (myConnected) : ip address : " << serverSocket::serverClient->peerAddress() ;
     QByteArray data ;

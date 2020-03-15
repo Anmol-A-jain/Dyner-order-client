@@ -25,6 +25,7 @@ public:
     explicit serverConnection(QWidget *parent = nullptr);
     ~serverConnection();
     void connectToServer(QString ip);
+    static void deleteAllThread();
 
 private slots:
     void on_btnConnect_clicked();
@@ -37,6 +38,8 @@ private:
     Ui::serverConnection *ui;
     QWidget* myParent;
     QString baseIp;
+
+    static QVector<findByPing*> threadList;
 };
 
 
@@ -55,7 +58,6 @@ public:
     {
         socket = new QTcpSocket();
         connect(socket,&QTcpSocket::connected,this,&findByPing::myConnected);
-        connect(socket,&QTcpSocket::stateChanged,this,&findByPing::mystateChange);
         socket->connectToHost(this->currIp,1812);
 
         exec();
@@ -66,20 +68,7 @@ public slots :
     void myConnected()
     {
         static_cast<serverConnection*>(myParent)->connectToServer(currIp);
-
         qDebug() << "findByPing (myConnected) : state : " << socket->state() ;
-    }
-    void mystateChange(QAbstractSocket::SocketState state)
-    {
-        //qDebug() << "findByPing (stateChanged) : state : " << serverSocket::serverClient->state() ;
-        if(state == QTcpSocket::ConnectingState)
-        {
-            isActive = true;
-        }
-        if(state == QTcpSocket::UnconnectedState && isActive)
-        {
-            exit(0);
-        }
     }
 
 private:
