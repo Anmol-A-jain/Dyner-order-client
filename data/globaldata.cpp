@@ -10,7 +10,6 @@ GlobalData::GlobalData()
 
 void GlobalData::setShadow(QWidget *widget)
 {
-
     auto effect = new QGraphicsDropShadowEffect();
     effect->setOffset(1.0);
     effect->setBlurRadius(5.0);

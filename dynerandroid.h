@@ -21,8 +21,12 @@ public:
     void cartWidgetWindow(int tblNo);
     void logInWidget();
     void closeWidget();
+    void menuWidget(int tblNo);
+
+    void setWidget(QWidget* child);
     void setTitle(QString title);
     void ChangeBoolvalue(bool value);
+
     void keyPressEvent(QKeyEvent* event) override;
 
 private slots:
@@ -35,10 +39,11 @@ private:
     QWidget* tableButtons;
     QWidget* cart;
     QWidget* closeWindow;
+    QWidget* menuList;
     int tbl;
 
     bool isExiting;
-    enum widgetWindow{serverConnectionWindow,cartWindow,tableListWindow,closeWindowWidget};
+    enum widgetWindow{serverConnectionWindow,cartWindow,tableListWindow,closeWindowWidget,menuListWidget};
 
 };
 #endif // DYNERANDROID_H

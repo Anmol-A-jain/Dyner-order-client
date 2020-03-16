@@ -1,9 +1,10 @@
 #ifndef ADDORDERITEM_H
 #define ADDORDERITEM_H
 
-#include "../customWidget/orderitemdata.h"
+#include "customWidget/orderitemdata.h"
 #include <QVector>
 #include <QWidget>
+#include <QLabel>
 
 namespace Ui {
 class AddOrderItem;
@@ -14,7 +15,7 @@ class AddOrderItem : public QWidget
     Q_OBJECT
 
 public:
-    explicit AddOrderItem(QWidget *parent = nullptr);
+    explicit AddOrderItem(int tblNo,QWidget *parent = nullptr);
     ~AddOrderItem();
     void loadData();
     void deleteVecterData();    
@@ -32,10 +33,13 @@ private slots:
 
     void on_categoryList_currentIndexChanged(int index);
 
+    void on_btnsubmit_clicked();
+
 private:
     Ui::AddOrderItem *ui;
     QWidget *myParent;
     QVector<OrderItemData*> itemlist;
+    int tblNo;
 };
 
 #endif // ADDORDERITEM_H

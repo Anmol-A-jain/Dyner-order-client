@@ -21,12 +21,12 @@ SOURCES += \
     main.cpp \
     dynerandroid.cpp \
     server/serversocket.cpp \
-    widget/Cart/DialogBox/addorderitem.cpp \
     widget/Cart/cart.cpp \
-    widget/Cart/customWidget/orderitemdata.cpp \
     widget/CloseWindow/closewindow.cpp \
-    widget/TableCustomButtons/tablecustombuttons.cpp \
+    widget/menu/addorderitem.cpp \
+    widget/menu/customWidget/orderitemdata.cpp \
     widget/serverConnection/serverconnection.cpp \
+    widget/tableList/TableCustomButtons/tablecustombuttons.cpp \
     widget/tableList/tablelist.cpp
 
 HEADERS += \
@@ -34,22 +34,22 @@ HEADERS += \
     data/globaldata.h \
     dynerandroid.h \
     server/serversocket.h \
-    widget/Cart/DialogBox/addorderitem.h \
     widget/Cart/cart.h \
-    widget/Cart/customWidget/orderitemdata.h \
     widget/CloseWindow/closewindow.h \
-    widget/TableCustomButtons/tablecustombuttons.h \
+    widget/menu/addorderitem.h \
+    widget/menu/customWidget/orderitemdata.h \
     widget/serverConnection/serverconnection.h \
+    widget/tableList/TableCustomButtons/tablecustombuttons.h \
     widget/tableList/tablelist.h
 
 FORMS += \
     dynerandroid.ui \
-    widget/Cart/DialogBox/addorderitem.ui \
     widget/Cart/cart.ui \
-    widget/Cart/customWidget/orderitemdata.ui \
     widget/CloseWindow/closewindow.ui \
-    widget/TableCustomButtons/tablecustombuttons.ui \
+    widget/menu/addorderitem.ui \
+    widget/menu/customWidget/orderitemdata.ui \
     widget/serverConnection/serverconnection.ui \
+    widget/tableList/TableCustomButtons/tablecustombuttons.ui \
     widget/tableList/tablelist.ui
 
 # Default rules for deployment.

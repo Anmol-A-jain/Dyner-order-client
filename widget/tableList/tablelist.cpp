@@ -1,6 +1,6 @@
 #include "tablelist.h"
 #include "ui_tablelist.h"
-#include "../TableCustomButtons/tablecustombuttons.h"
+#include "TableCustomButtons/tablecustombuttons.h"
 #include <QPushButton>
 #include <QtMath>
 #include <QDebug>
@@ -9,6 +9,7 @@
 #include <QScrollBar>
 #include <QAbstractItemView>
 #include "data/globaldata.h"
+#include "dynerandroid.h"
 
 tableList::tableList(int tbl,QWidget *parent) :
     QWidget(parent),
@@ -17,15 +18,16 @@ tableList::tableList(int tbl,QWidget *parent) :
     ui->setupUi(this);
     myParent = parent;
     this->tbl = tbl;
-    this->column = 3;
+    this->column = 2;
     QScrollArea *scrollArea = ui->scrollArea;
     scrollArea->horizontalScrollBar()->setStyleSheet("QScrollBar {height:0px;}");
     scrollArea->verticalScrollBar()->setStyleSheet("QScrollBar {width:10px;}");
     QScroller::grabGesture(scrollArea, QScroller::TouchGesture);
     setButton();
 
-
     GlobalData::setShadow(this);
+    QString title = "Table List";
+    static_cast<DynerAndroid*>(myParent)->setTitle(title);
 }
 
 tableList::~tableList()

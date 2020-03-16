@@ -1,7 +1,6 @@
 #include "orderitemdata.h"
 #include "ui_orderitemdata.h"
 #include "data/globaldata.h"
-#include "../cart.h"
 #include <QDebug>
 #include <QMessageBox>
 
@@ -16,6 +15,8 @@ OrderItemData::OrderItemData(QString id,QString name,QString category,QString pr
     ui->lblName->setText(name);
     ui->lblCategory->setText(category);
     ui->lblRate->setText(prc);
+
+    GlobalData::setShadow(this);
 
     /*int tblNo = static_cast<Cart*>(myparent)->getTblNo();
 

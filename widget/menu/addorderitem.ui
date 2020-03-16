@@ -19,7 +19,7 @@
      <property name="styleSheet">
       <string notr="true">#window
 {
-	background-color: rgb(85, 170, 255)
+	background-color: rgba(255, 255,255,0.5);
 }</string>
      </property>
      <layout class="QGridLayout" name="gridLayout">
@@ -122,7 +122,7 @@
         <property name="styleSheet">
          <string notr="true">#scrollArea,#scrollAreaWidgetContents
 {
-	background-color: rgb(92, 185, 255)
+	background-color: rgb(255, 255, 255);
 }</string>
         </property>
         <property name="widgetResizable">
@@ -134,7 +134,7 @@
            <x>0</x>
            <y>0</y>
            <width>483</width>
-           <height>618</height>
+           <height>608</height>
           </rect>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -232,11 +232,11 @@
        </layout>
       </item>
       <item row="4" column="0">
-       <widget class="QPushButton" name="pushButton">
+       <widget class="QPushButton" name="btnsubmit">
         <property name="minimumSize">
          <size>
           <width>0</width>
-          <height>25</height>
+          <height>35</height>
          </size>
         </property>
         <property name="styleSheet">
@@ -245,7 +245,7 @@ color: white;
 border-radius:5px;</string>
         </property>
         <property name="text">
-         <string>Close</string>
+         <string>Submit</string>
         </property>
        </widget>
       </item>

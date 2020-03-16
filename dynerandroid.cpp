@@ -9,6 +9,7 @@
 #include "data/globaldata.h"
 #include "widget/tableList/tablelist.h"
 #include "widget/Cart/cart.h"
+#include "widget/menu/addorderitem.h"
 #include "widget/CloseWindow/closewindow.h"
 
 DynerAndroid::DynerAndroid(QWidget *parent)
@@ -24,6 +25,8 @@ DynerAndroid::DynerAndroid(QWidget *parent)
 
     ui->btnHome->hide();
     ui->pushButton->hide();
+
+    this->menuList = nullptr;
 }
 
 DynerAndroid::~DynerAndroid()
@@ -73,6 +76,13 @@ QWidget* DynerAndroid::newWindow(int option,int tblNo)
             return new CloseWindow(ui->widgetTitle);
             break;
         }
+        case menuListWidget :
+        {
+            ui->btnHome->show();
+            ui->pushButton->show();
+            return new AddOrderItem(tblNo,this);
+            break;
+        }
     }
     return childFrame;
 }
@@ -80,32 +90,26 @@ QWidget* DynerAndroid::newWindow(int option,int tblNo)
 void DynerAndroid::dinningTableList(int tbl)
 {
     this->tbl = tbl;
-    QWidget* temp = childFrame;
-    //childFrame->deleteLater();
-    tableButtons = newWindow(widgetWindow::tableListWindow);
-    childFrame = tableButtons;
-    ui->windowContainer->addWidget(childFrame);
-    delete temp;
+    logWindow = newWindow(tableListWindow);
+    setWidget(logWindow);
 }
 
 void DynerAndroid::cartWidgetWindow(int tblNo)
 {
-    QWidget* temp = childFrame;
-    //childFrame->deleteLater();
-    cart = newWindow(widgetWindow::cartWindow,tblNo);
-    childFrame = cart;
-    ui->windowContainer->addWidget(childFrame);
-    delete temp;
+    logWindow = newWindow(cartWindow,tblNo);
+    setWidget(logWindow);
 }
 
 void DynerAndroid::logInWidget()
 {
-    QWidget* temp = childFrame;
-    //childFrame->deleteLater();
-    logWindow = newWindow(widgetWindow::serverConnectionWindow);
-    childFrame = logWindow ;
-    ui->windowContainer->addWidget(childFrame);
-    delete temp;
+    logWindow = newWindow(serverConnectionWindow);
+    setWidget(logWindow);
+}
+
+void DynerAndroid::menuWidget(int tblNo)
+{
+    menuList = newWindow(menuListWidget,tblNo);
+    setWidget(menuList);
 }
 
 void DynerAndroid::closeWidget()
@@ -123,6 +127,15 @@ void DynerAndroid::closeWidget()
     ui->windowContainer->addWidget(childFrame);
     delete temp;
     */
+}
+
+void DynerAndroid::setWidget(QWidget *child)
+{
+    QWidget* temp = childFrame;
+    //childFrame->deleteLater();
+    childFrame = child ;
+    ui->windowContainer->addWidget(childFrame);
+    delete temp;
 }
 
 void DynerAndroid::setTitle(QString title)
@@ -149,9 +162,14 @@ void DynerAndroid::keyPressEvent(QKeyEvent *event)
     if(event->key() == Qt::Key_Back )
     {
         qDebug() << "DynerAndroid (keyPressEvent) : back_Button pressed";
-        if(childFrame == cart)
+        if(childFrame == menuList)
         {
             this->dinningTableList(this->tbl);
+            return;
+        }
+        if(childFrame == cart)
+        {
+            this->menuWidget(this->tbl);
             return;
         }
         if(childFrame == tableButtons)

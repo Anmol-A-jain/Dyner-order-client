@@ -78,7 +78,7 @@ void serverSocket::myReadReady()
         default:
         {
             qDebug() << "serverConnection (myReadReady) : default case called : " << dataIn;
-            QMessageBox::StandardButton reply = QMessageBox::critical(new QWidget,"Diconnected","Server has been disconnected,\n App will exit",QMessageBox::Ok);
+            QMessageBox::StandardButton reply = QMessageBox::critical(new QWidget,"incomplete data","Something went wrong,\n App will exit",QMessageBox::Ok);
             if(reply == QMessageBox::Ok)
                 qApp->exit(0);
         }

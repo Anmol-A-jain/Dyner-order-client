@@ -2,14 +2,26 @@
 #include "ui_addorderitem.h"
 #include "data/globaldata.h"
 #include <QDebug>
-#include "../cart.h"
+#include <QScrollBar>
+#include <QScroller>
+#include "dynerandroid.h"
 
-AddOrderItem::AddOrderItem(QWidget *parent) :
+AddOrderItem::AddOrderItem(int tblNo,QWidget *parent) :
     QWidget(parent),
     ui(new Ui::AddOrderItem)
 {
     ui->setupUi(this);
     myParent = parent;
+
+    this->tblNo = tblNo;
+
+    QScrollArea *scrollArea = ui->scrollArea;
+    scrollArea->horizontalScrollBar()->setStyleSheet("QScrollBar {height:0px;}");
+    scrollArea->verticalScrollBar()->setStyleSheet("QScrollBar {width:10px;}");
+    QScroller::grabGesture(scrollArea, QScroller::TouchGesture);
+
+    QString title = "Menu List : table " + QString::number(tblNo);
+    static_cast<DynerAndroid*>(myParent)->setTitle(title);
 
     ui->categoryList->hide();
     this->loadData();
@@ -189,3 +201,8 @@ void AddOrderItem::on_categoryList_currentIndexChanged(int index)
     emit on_btnSearch_clicked();
 }
 
+
+void AddOrderItem::on_btnsubmit_clicked()
+{
+    static_cast<DynerAndroid*>(myParent)->cartWidgetWindow(this->tblNo);
+}

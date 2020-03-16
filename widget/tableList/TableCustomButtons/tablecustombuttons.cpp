@@ -12,9 +12,6 @@ TableCustomButtons::TableCustomButtons(int tbl,QString name,QWidget *parent) :
     ui->btnTable->setText(name);
     this->tbl = tbl;
 
-    QString title = "Table List";
-    static_cast<DynerAndroid*>(myParent)->setTitle(title);
-
     GlobalData::setShadow(this);
 }
 
@@ -30,5 +27,6 @@ QString TableCustomButtons::getText()
 
 void TableCustomButtons::on_btnTable_clicked()
 {
-    static_cast<DynerAndroid*>(myParent)->cartWidgetWindow(tbl);
+    //static_cast<DynerAndroid*>(myParent)->cartWidgetWindow(tbl);
+    static_cast<DynerAndroid*>(myParent)->menuWidget(this->tbl);
 }

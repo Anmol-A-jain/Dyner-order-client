@@ -1,7 +1,6 @@
 #include "cart.h"
 #include "ui_cart.h"
 #include "dynerandroid.h"
-#include "DialogBox/addorderitem.h"
 
 Cart::Cart(int tbl,QWidget *parent) :
     QWidget(parent),
@@ -10,7 +9,7 @@ Cart::Cart(int tbl,QWidget *parent) :
     ui->setupUi(this);
     this->tbl = tbl;
     myParent = parent;
-    QString title = "Table";
+    QString title = "Cart : Table";
     static_cast<DynerAndroid*>(myParent)->setTitle(title +" : "+ QString::number(tbl));
 }
 
@@ -26,6 +25,5 @@ int Cart::getTblNo()
 
 void Cart::on_pushButton_clicked()
 {
-    AddOrderItem aoi(this);
-    aoi.show();
+    //AddOrderItem aoi(this);
 }
