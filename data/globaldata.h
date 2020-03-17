@@ -12,6 +12,12 @@ struct menuData
     double price;
 };
 
+struct orderData
+{
+    menuData* item;
+    double qty;
+};
+
 class GlobalData
 {
 public:
@@ -21,9 +27,15 @@ public:
     static void setShadow(QWidget* widget);
 
     //menu data Functions
-    static void setMendsduItem(QString id,QString name,QString category,double price);
+    static void setMenuItem(QString id,QString name,QString category,double price);
+    static void setItemQty(menuData* item,double qty);
+
+    //delete vector
+    static void deleteCartVectordata();
+
     //vector to store menu in dynamic array
     static QVector<menuData*> menuDataList;
+    static QVector<orderData*> CartItem;
 
 private:
     QHash<int,QString> tagname;

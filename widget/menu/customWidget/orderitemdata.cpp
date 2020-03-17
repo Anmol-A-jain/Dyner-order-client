@@ -1,42 +1,34 @@
 #include "orderitemdata.h"
 #include "ui_orderitemdata.h"
-#include "data/globaldata.h"
 #include <QDebug>
 #include <QMessageBox>
 
-OrderItemData::OrderItemData(QString id,QString name,QString category,QString prc, QWidget *parent) :
+OrderItemData::OrderItemData(menuData* item,double qty, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::OrderItemData)
 {
     ui->setupUi(this);
     myparent = parent;
+    this->item = item;
 
-    ui->lblId->setText(id);
-    ui->lblName->setText(name);
-    ui->lblCategory->setText(category);
-    ui->lblRate->setText(prc);
+    if(qty > 0.0 ) ui->txtQty->setValue(qty);
+
+    QVector<orderData*>* q = &GlobalData::CartItem;
+
+    for (int i = 0; i < q->count(); ++i)
+    {
+       if(q->at(i)->item->id == item->id)
+       {
+            ui->txtQty->setValue(q->at(i)->qty);
+       }
+    }
+
+    ui->lblId->setText(item->id);
+    ui->lblName->setText(item->name);
+    ui->lblCategory->setText(item->category);
+    ui->lblRate->setText(QString::number(item->price));
 
     GlobalData::setShadow(this);
-
-    /*int tblNo = static_cast<Cart*>(myparent)->getTblNo();
-
-    databaseCon d;
-
-    QString cmd = "select * from tblTempOrder WHERE table_no =" + QString::number(tblNo) ;
-
-    QSqlQuery* q = d.execute(cmd);
-
-    while( q->next() )
-    {
-
-        QString myId = q->value("item_id").toString();
-        double qty = q->value("qty").toDouble();
-        if(id == myId)
-        {
-            ui->doubleSpinBox->setValue(qty);
-        }
-    }
-    delete q;*/
 }
 
 OrderItemData::~OrderItemData()
@@ -44,44 +36,66 @@ OrderItemData::~OrderItemData()
     delete ui;
 }
 
-
-void OrderItemData::on_btnAddOrder_clicked()
+void OrderItemData::on_btnPlus_clicked()
 {
-    /*databaseCon d;
-
-    int tblNo = static_cast<Cart*>(myparent)->getTblNo();
-    QString cmd = "select * from tblTempOrder WHERE table_no =" + QString::number(tblNo) + " AND item_id = " + ui->lblId->text() ;
-    QSqlQuery* q = d.execute(cmd);
-
-    while (q->next())
+    if(ui->txtQty->text().toDouble() == 0.0)
     {
-        if(ui->doubleSpinBox->text().toDouble() == 0.0)
+        ui->txtQty->stepUp();
+
+        GlobalData::setItemQty(item,ui->txtQty->text().toDouble());
+
+        return;
+    }
+    ui->txtQty->stepUp();
+
+    QVector<orderData*>* q = &GlobalData::CartItem;
+
+    for (int i = 0; i < q->count(); ++i)
+    {
+        if(q->at(i)->item->id == item->id)
         {
-            cmd = "DELETE FROM tblTempOrder WHERE item_id = '"+ ui->lblId->text() +"'";
-            QMessageBox::information(this,"Info","Item Has been Deleted");
+            q->at(i)->qty = q->at(i)->qty+1;
+            qDebug() << "OrderItemData (on_btnPlus_clicked) : qty " << q->at(i)->qty;
         }
-        else
+    }
+
+}
+
+void OrderItemData::on_btnMinus_clicked()
+{
+    if(ui->txtQty->text().toDouble() == 1.0)
+    {
+        ui->txtQty->stepDown();
+
+        QVector<orderData*>* q = &GlobalData::CartItem;
+
+        for (int i = 0; i < q->count(); ++i)
         {
-            cmd = "UPDATE tblTempOrder SET qty = '"+ui->doubleSpinBox->text()+"' WHERE item_id = '"+ui->lblId->text()+"' ";
-            QMessageBox::information(this,"Info","Quantity has been updated");
+           if(q->at(i)->item->id == item->id)
+           {
+               qDebug() << "OrderItemData (on_btnMinus_clicked) : count befor " << q->count();
+               q->remove(i);
+               qDebug() << "OrderItemData (on_btnMinus_clicked) : count after " << q->count();
+               break;
+           }
         }
-        q = d.execute(cmd);
-        delete q;
-        static_cast<OrderWidget*>(myparent)->loadData();
+        return;
+    }
+    if(ui->txtQty->text().toDouble() == 0.0)
+    {
         return;
     }
 
-    if(ui->doubleSpinBox->text().toDouble() == 0.0)
+    ui->txtQty->stepDown();
+
+    QVector<orderData*>* q = &GlobalData::CartItem;
+
+    for (int i = 0; i < q->count(); ++i)
     {
-        QMessageBox::warning(this,"Info","Please Enter value");
-        return;
+       if(q->at(i)->item->id == item->id)
+       {
+           q->at(i)->qty = q->at(i)->qty-1;
+           qDebug() << "OrderItemData (on_btnMinus_clicked) : qty " << q->at(i)->qty;
+       }
     }
-
-    cmd = "INSERT INTO tblTempOrder VALUES("+QString::number(tblNo)+",'"+ui->lblId->text()+"','"+ui->doubleSpinBox->text()+"')" ;
-
-    q = d.execute(cmd);
-    QMessageBox::information(this,"Info","Item Added");
-
-    delete q;    
-    static_cast<OrderWidget*>(myparent)->loadData();*/
 }

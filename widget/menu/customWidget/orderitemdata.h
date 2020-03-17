@@ -2,6 +2,8 @@
 #define ORDERITEMDATA_H
 
 #include <QWidget>
+#include "data/globaldata.h"
+
 
 namespace Ui {
 class OrderItemData;
@@ -12,16 +14,19 @@ class OrderItemData : public QWidget
     Q_OBJECT
 
 public:
-    explicit OrderItemData(QString id,QString name,QString category,QString prc,QWidget *parent = nullptr);
+    explicit OrderItemData(menuData* item,double qty = 0,QWidget *parent = nullptr);
     ~OrderItemData();
 
 private slots:
 
-    void on_btnAddOrder_clicked();
+    void on_btnPlus_clicked();
+
+    void on_btnMinus_clicked();
 
 private:
     Ui::OrderItemData *ui;
     QWidget *myparent;
+    menuData *item;
 };
 
 #endif // ORDERITEMDATA_H

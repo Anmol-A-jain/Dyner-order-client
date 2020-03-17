@@ -13,6 +13,9 @@
   <property name="windowTitle">
    <string>Add To Cart</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">font: 10pt &quot;MS Shell Dlg 2&quot;;</string>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <widget class="QWidget" name="window" native="true">
@@ -134,7 +137,7 @@
            <x>0</x>
            <y>0</y>
            <width>483</width>
-           <height>608</height>
+           <height>588</height>
           </rect>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -236,11 +239,12 @@
         <property name="minimumSize">
          <size>
           <width>0</width>
-          <height>35</height>
+          <height>50</height>
          </size>
         </property>
         <property name="styleSheet">
          <string notr="true">background-color: #3495fe;
+font: 16pt &quot;MS Shell Dlg 2&quot;;
 color: white;
 border-radius:5px;</string>
         </property>

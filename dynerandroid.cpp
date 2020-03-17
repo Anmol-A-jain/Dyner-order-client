@@ -27,6 +27,8 @@ DynerAndroid::DynerAndroid(QWidget *parent)
     ui->pushButton->hide();
 
     this->menuList = nullptr;
+
+    GlobalData::deleteCartVectordata();
 }
 
 DynerAndroid::~DynerAndroid()
@@ -146,6 +148,11 @@ void DynerAndroid::setTitle(QString title)
 void DynerAndroid::ChangeBoolvalue(bool value)
 {
     isExiting = value;
+}
+
+void DynerAndroid::callCartObject(QString name,QString mblNo)
+{
+    static_cast<Cart*>(cart)->customerData(name,mblNo);
 }
 
 void DynerAndroid::on_btnHome_clicked()

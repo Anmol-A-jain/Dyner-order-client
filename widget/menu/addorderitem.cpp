@@ -44,14 +44,8 @@ void AddOrderItem::loadData()
 
     for( int i = 0 ; q.count() > i ;++i )
     {
-
-        QString id = q[i]->id; //q->value("id").toString();
-        QString itemName = q[i]->name; //q->value("itemName").toString();
-        QString category = q[i]->category; //q->value("category").toString();
-        QString price = QString::number(q[i]->price); //q->value("Price").toString();
-
         qDebug() << "AddOrderItem.cpp (loadData) : id " << q[i]->id; //q->value("id").toString();
-        OrderItemData *item = new OrderItemData(id,itemName,category,price,myParent);
+        OrderItemData *item = new OrderItemData(q[i],0,myParent);
         itemlist.push_back(item);
         ui->displayAddOrder->addWidget(item);
 

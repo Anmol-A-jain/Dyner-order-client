@@ -27,6 +27,8 @@ public:
     void setTitle(QString title);
     void ChangeBoolvalue(bool value);
 
+    void callCartObject(QString name,QString mblNo);
+
     void keyPressEvent(QKeyEvent* event) override;
 
 private slots:

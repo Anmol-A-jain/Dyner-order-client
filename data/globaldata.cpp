@@ -1,7 +1,9 @@
 #include "globaldata.h"
 #include <QGraphicsDropShadowEffect>
+#include <QDebug>
 
 QVector<menuData*> GlobalData::menuDataList;
+QVector<orderData*> GlobalData::CartItem;
 
 GlobalData::GlobalData()
 {
@@ -17,7 +19,7 @@ void GlobalData::setShadow(QWidget *widget)
     widget->setGraphicsEffect(effect);
 }
 
-void GlobalData::setMendsduItem(QString id, QString name, QString category, double price)
+void GlobalData::setMenuItem(QString id, QString name, QString category, double price)
 {
     menuData* item = new menuData ;
 
@@ -26,5 +28,25 @@ void GlobalData::setMendsduItem(QString id, QString name, QString category, doub
     item->category = category;
     item->price = price;
 
-    GlobalData::menuDataList.push_back(item);
+    menuDataList.push_back(item);
+}
+
+void GlobalData::setItemQty(menuData* item, double qty)
+{
+    orderData* order = new orderData;
+
+    order->item = item;
+    order->qty = qty;
+
+    CartItem.push_back(order);
+}
+
+void GlobalData::deleteCartVectordata()
+{
+    for (int i = 0; i < CartItem.count(); ++i)
+    {
+        delete CartItem.at(i);
+    }
+    CartItem.clear();
+    qDebug() << "GlobalData (deleteCartVectordata) : cart data has been deleted";
 }

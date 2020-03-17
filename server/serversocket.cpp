@@ -65,7 +65,7 @@ void serverSocket::myReadReady()
                 QString id,name,category;
                 double price;
                 in >> id >> name >> category >> price;
-                GlobalData::setMendsduItem(id,name,category,price);
+                GlobalData::setMenuItem(id,name,category,price);
                 qDebug() << endl<< "serverConnection (myReadReady) : id : " << GlobalData::menuDataList.last()->id ;
                 qDebug() << "serverConnection (myReadReady) : name : " << GlobalData::menuDataList.last()->name ;
                 qDebug() << "serverConnection (myReadReady) : category : " << GlobalData::menuDataList.last()->category ;
@@ -73,6 +73,14 @@ void serverSocket::myReadReady()
             }
             qDebug() << "serverConnection (myReadReady) : Total Item : " << i;
 
+            break;
+        }
+        case ALLAction::getCustInfo:
+        {
+            QString name,mblNo;
+            in >> name >> mblNo;
+            qDebug() << "serverConnection (myReadReady) : cust data : " << name << ":" << mblNo ;
+            static_cast<DynerAndroid*>(myParent)->callCartObject(name,mblNo);
             break;
         }
         default:
@@ -83,66 +91,6 @@ void serverSocket::myReadReady()
                 qApp->exit(0);
         }
     }
-
-    /*QString data = serverClient->readAll();
-
-
-    QStringList list = data.split('~');
-    if(list.size() == 1)
-    {
-        return;
-    }
-
-    bool isFirst = true;
-    QStringList dataList ;
-    int action;
-
-    qDebug() << "serverConnection (myReadReady) : list : " << list;
-    qDebug() << "serverConnection (myReadReady) : list.size() : " << list.size();
-
-    for(int i = 0 ;i < list.length() ; ++i)
-    {
-        qDebug() << "serverConnection (myReadReady) : list.at(" + QString::number(i) +"):" << list[i];
-        if(isFirst)
-        {
-            action = list.at(i).toInt() ;
-            isFirst = false;
-        }
-        else
-        {
-            dataList.push_back(list.at(i));
-        }
-    }
-
-    qDebug() << "serverConnection (myReadReady) : action : " << action;
-    qDebug() << "serverConnection (myReadReady) : dataList : " << dataList;
-
-    QString value = dataList.at(0);
-    qDebug() << "serverConnection (myReadReady) : total Table no : " << value;
-
-    switch (action)
-    {
-        case ALLAction::error :
-        {
-            break;
-        }
-        case ALLAction::getTotaltableNo :
-        {
-            for(int i = 0 ; i < list.size() ; ++i)
-            {
-                QString value = dataList.first();
-                qDebug() << "serverConnection (myReadReady) : total Table no : " << value;
-                int tbl = value.toInt();
-                static_cast<DynerAndroid*>(myParent)->dinningTableList(tbl);
-            }
-            break;
-        }
-        default:
-        {
-            qDebug() << "serverConnection (myReadReady) : default case called : " << data;
-            break;
-        }
-    }*/
 }
 
 void serverSocket::myConnected()
