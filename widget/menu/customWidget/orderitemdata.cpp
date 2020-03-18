@@ -28,6 +28,7 @@ OrderItemData::OrderItemData(menuData* item,double qty, QWidget *parent) :
     ui->lblCategory->setText(item->category);
     ui->lblRate->setText(QString::number(item->price));
 
+    ui->txtQty->setButtonSymbols(QAbstractSpinBox::NoButtons);
     GlobalData::setShadow(this);
 }
 

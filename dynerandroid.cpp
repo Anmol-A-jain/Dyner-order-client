@@ -82,6 +82,7 @@ QWidget* DynerAndroid::newWindow(int option,int tblNo)
         {
             ui->btnHome->show();
             ui->pushButton->show();
+            this->currentTbl = tblNo;
             return new AddOrderItem(tblNo,this);
             break;
         }
@@ -91,7 +92,10 @@ QWidget* DynerAndroid::newWindow(int option,int tblNo)
 
 void DynerAndroid::dinningTableList(int tbl)
 {
-    this->tbl = tbl;
+    if(tbl != 0)
+    {
+        this->tbl = tbl;
+    }
     logWindow = newWindow(tableListWindow);
     setWidget(logWindow);
 }
@@ -176,7 +180,7 @@ void DynerAndroid::keyPressEvent(QKeyEvent *event)
         }
         if(childFrame == cart)
         {
-            this->menuWidget(this->tbl);
+            this->menuWidget(this->currentTbl);
             return;
         }
         if(childFrame == tableButtons)

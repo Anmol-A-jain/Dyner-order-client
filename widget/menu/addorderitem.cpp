@@ -36,10 +36,6 @@ void AddOrderItem::loadData()
 {
 
     this->deleteVecterData();
-    /*databaseCon d;
-    QString cmd = "select * from mstTblMenu order by id" ;
-    QSqlQuery* q = d.execute(cmd);
-    */
     QVector<menuData*> q = GlobalData::menuDataList;
 
     for( int i = 0 ; q.count() > i ;++i )
@@ -48,7 +44,6 @@ void AddOrderItem::loadData()
         OrderItemData *item = new OrderItemData(q[i],0,myParent);
         itemlist.push_back(item);
         ui->displayAddOrder->addWidget(item);
-
     }
 }
 
@@ -77,7 +72,13 @@ void AddOrderItem::updateCategorylist()
     */
 
     QVector<menuData*> q = GlobalData::menuDataList;
-    for (int i = 0; i < q.count(); ++i) {
+
+    for (int i = 0; i < q.count(); ++i)
+    {
+
+        int result = ui->categoryList->findText(q[i]->category);
+
+        if(result != -1) continue;
 
         qDebug() << "AdminWidget.cpp (loadComboBoxData) : combo box :" << q[i]->category; //q->value("category").toString();
         //ui->categoryList->addItem(q->value("category").toString());

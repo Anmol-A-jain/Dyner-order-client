@@ -17,7 +17,7 @@ public:
     ~DynerAndroid();
 
     QWidget* newWindow(int option,int tblNo = 0);
-    void dinningTableList(int tbl);
+    void dinningTableList(int tbl = 0);
     void cartWidgetWindow(int tblNo);
     void logInWidget();
     void closeWidget();
@@ -43,6 +43,7 @@ private:
     QWidget* closeWindow;
     QWidget* menuList;
     int tbl;
+    int currentTbl;
 
     bool isExiting;
     enum widgetWindow{serverConnectionWindow,cartWindow,tableListWindow,closeWindowWidget,menuListWidget};

@@ -78,6 +78,12 @@ void Cart::on_AddItem_clicked()
         return;
     }
 
+    if(ui->txtMblNo->text().length() < 10)
+    {
+        QMessageBox::warning(this,"Mobile Issue","Please enter valid Mobile No");
+        return;
+    }
+
     QByteArray data ;
     QDataStream out(&data,QIODevice::ReadWrite);
     qint16 i = ALLAction::cartData;
@@ -85,8 +91,15 @@ void Cart::on_AddItem_clicked()
 
     QVector<orderData*>* q = &GlobalData::CartItem;
 
-    out << i << getTblNo();
-    out << q->count() ;
+    qint16 count = q->count();
+    QString mblNo = ui->txtMblNo->text() ,name = ui->txtCustName->text();
+
+    out << i ;
+    out << tbl ;
+    out << count ;
+    out << name << mblNo;
+
+    qDebug() << "Cart (on_AddItem_clicked) : cart data  : " << tbl << ":" << count ;
 
     for (int i = 0; i < q->count(); ++i)
     {
@@ -100,4 +113,24 @@ void Cart::on_AddItem_clicked()
     qDebug() << "Cart (on_AddItem_clicked) : data to send : " << data ;
     //sending req for total table count
     serverSocket::serverClient->write(data);
+    serverSocket::serverClient->flush();
+
+    q->clear();
+
+    QMessageBox::information(this,"Order Placed","Order has been Placed");
+    static_cast<DynerAndroid*>(myParent)->dinningTableList();
+
+    // get the information
+
+//    QDataStream in(&data,QIODevice::ReadWrite);
+
+//    qint16 action;
+//    in >> action >> tbl >> count;
+//    QString id;
+//    double qty;
+//    in >> id >> qty;
+
+//    qDebug() << "Cart (on_AddItem_clicked) : cart data  : " << tbl << ":" << count ;
+//    qDebug() << "Cart (on_AddItem_clicked) : cart data  : " << id << ":" << qty ;
+
 }

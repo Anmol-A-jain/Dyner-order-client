@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>920</width>
-    <height>84</height>
+    <height>86</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -47,7 +47,7 @@
        <widget class="QLabel" name="lblName">
         <property name="maximumSize">
          <size>
-          <width>300</width>
+          <width>16777215</width>
           <height>16777215</height>
          </size>
         </property>
@@ -60,7 +60,7 @@
        <widget class="QLabel" name="lblCategory">
         <property name="maximumSize">
          <size>
-          <width>100</width>
+          <width>200</width>
           <height>16777215</height>
          </size>
         </property>

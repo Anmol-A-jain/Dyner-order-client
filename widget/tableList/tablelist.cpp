@@ -28,6 +28,10 @@ tableList::tableList(int tbl,QWidget *parent) :
     GlobalData::setShadow(this);
     QString title = "Table List";
     static_cast<DynerAndroid*>(myParent)->setTitle(title);
+
+    QVector<orderData*>* q = &GlobalData::CartItem;
+
+    q->clear();
 }
 
 tableList::~tableList()
