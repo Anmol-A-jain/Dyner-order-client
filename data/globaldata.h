@@ -40,7 +40,6 @@ public:
 private:
     QHash<int,QString> tagname;
     QHash<int,QString> attribute;
-
 };
 
 #endif // GLOBALDATA_H

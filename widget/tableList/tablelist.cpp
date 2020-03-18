@@ -32,6 +32,7 @@ tableList::tableList(int tbl,QWidget *parent) :
     QVector<orderData*>* q = &GlobalData::CartItem;
 
     q->clear();
+
 }
 
 tableList::~tableList()

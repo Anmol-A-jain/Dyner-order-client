@@ -170,6 +170,8 @@ void DynerAndroid::on_btnHome_clicked()
 // overriding back button functioning
 void DynerAndroid::keyPressEvent(QKeyEvent *event)
 {
+    qDebug() << "DynerAndroid (keyPressEvent) : pressed" << event->key();
+
     if(event->key() == Qt::Key_Back )
     {
         qDebug() << "DynerAndroid (keyPressEvent) : back_Button pressed";
@@ -222,5 +224,6 @@ void DynerAndroid::keyPressEvent(QKeyEvent *event)
         }
         return;
     }
+
     event->accept();
 }

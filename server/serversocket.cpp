@@ -72,7 +72,6 @@ void serverSocket::myReadReady()
                 qDebug() << "serverConnection (myReadReady) : price : " << GlobalData::menuDataList.last()->price << endl ;
             }
             qDebug() << "serverConnection (myReadReady) : Total Item : " << i;
-
             break;
         }
         case ALLAction::getCustInfo:
