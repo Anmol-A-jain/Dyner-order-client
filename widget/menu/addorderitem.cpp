@@ -86,6 +86,11 @@ void AddOrderItem::updateCategorylist()
     }
 }
 
+bool AddOrderItem::isContains(QString text, QString subText)
+{
+    return text.indexOf(subText, 0, Qt::CaseInsensitive) != -1;
+}
+
 void AddOrderItem::on_menuColumn_currentIndexChanged(int index)
 {
     if(index == 3 )
@@ -103,78 +108,132 @@ void AddOrderItem::on_menuColumn_currentIndexChanged(int index)
 
 void AddOrderItem::on_btnSearch_clicked()
 {
-    /*
-    QString columnName;
-    QString cmd;
+
     QString searchText = ui->SearchTextBox->text();
-    bool isPrice = false, isName = false, isCategory = false, isAll = false;
+
+    enum menu{all,id,name,category,price};
 
     if(!ui->SearchTextBox->text().isEmpty() || !ui->categoryList->isHidden() )
     {
-        if(ui->menuColumn->currentText() == ui->menuColumn->itemText(0))
-        {
-            isAll = true;
-        }
-        else if(ui->menuColumn->currentText() == ui->menuColumn->itemText(1))
-        {
-            columnName = "id";
-        }
-        else if(ui->menuColumn->currentText() == ui->menuColumn->itemText(2))
-        {
-            columnName = "itemName";
-            isName = true;
-        }
-        else if(ui->menuColumn->currentText() == ui->menuColumn->itemText(3))
-        {
-            columnName = "category";
-            isCategory = true;
-        }
-        else if(ui->menuColumn->currentText() == ui->menuColumn->itemText(4))
-        {
-            columnName = "Price";
-            isPrice = true;
-        }
 
-        if(isPrice)
+        switch (ui->menuColumn->currentIndex())
         {
-            cmd = "SELECT * FROM mstTblMenu WHERE "+ columnName +" = "+ searchText +" ORDER BY id" ;
-        }
-        else if(isName)
-        {
-            cmd = "SELECT * FROM mstTblMenu WHERE "+ columnName +" LIKE '%"+ searchText +"%' ORDER BY id" ;
-        }
-        else if(isAll)
-        {
-            cmd = "SELECT * FROM mstTblMenu WHERE id = '"+searchText+"' OR itemName LIKE '%"+ searchText +"%' OR category LIKE '%"+ searchText +"%' OR Price = '"+ searchText +"' ORDER BY id" ;
-        }
-        else if(isCategory)
-        {
-            cmd = "SELECT * FROM mstTblMenu WHERE "+ columnName +" = '"+ ui->categoryList->currentText() +"' ORDER BY id" ;
-        }
-        else
-        {
-            cmd = "SELECT * FROM mstTblMenu WHERE "+ columnName +" LIKE '%"+ ui->SearchTextBox->text() +"%' ORDER BY id" ;
+            case all:
+            {
+                QString itemId,itemName,itemCategory,itemPrice;
+                for (int i = 0; i < itemlist.count(); ++i)
+                {
+                    itemId = itemlist.at(i)->getId();
+                    itemName = itemlist.at(i)->getName();
+                    itemCategory = itemlist.at(i)->getCategory();
+                    itemPrice = itemlist.at(i)->getPrice();
+
+                    if(isContains(itemId,searchText) || isContains(itemName,searchText) || isContains(itemCategory,searchText) || isContains(itemPrice,searchText) )
+                    {
+                        itemlist.at(i)->show();
+                    }
+                    else
+                    {
+                        itemlist.at(i)->hide();
+                    }
+                }
+                break;
+            }
+            case id:
+            {
+                QString itemId,itemName,itemCategory,itemPrice;
+                for (int i = 0; i < itemlist.count(); ++i)
+                {
+                    itemId = itemlist.at(i)->getId();
+                    itemName = itemlist.at(i)->getName();
+                    itemCategory = itemlist.at(i)->getCategory();
+                    itemPrice = itemlist.at(i)->getPrice();
+
+                    if(isContains(itemId,searchText))
+                    {
+                        itemlist.at(i)->show();
+                    }
+                    else
+                    {
+                        itemlist.at(i)->hide();
+                    }
+                }
+                break;
+            }
+            case name:
+            {
+                QString itemId,itemName,itemCategory,itemPrice;
+                for (int i = 0; i < itemlist.count(); ++i)
+                {
+                    itemId = itemlist.at(i)->getId();
+                    itemName = itemlist.at(i)->getName();
+                    itemCategory = itemlist.at(i)->getCategory();
+                    itemPrice = itemlist.at(i)->getPrice();
+
+                    if(isContains(itemName,searchText))
+                    {
+                        itemlist.at(i)->show();
+                    }
+                    else
+                    {
+                        itemlist.at(i)->hide();
+                    }
+                }
+
+                break;
+            }
+            case category:
+            {
+                QString itemId,itemName,itemCategory,itemPrice;
+                for (int i = 0; i < itemlist.count(); ++i)
+                {
+                    itemId = itemlist.at(i)->getId();
+                    itemName = itemlist.at(i)->getName();
+                    itemCategory = itemlist.at(i)->getCategory();
+                    itemPrice = itemlist.at(i)->getPrice();
+
+                    if(isContains(itemCategory,ui->categoryList->currentText()))
+                    {
+                        itemlist.at(i)->show();
+                    }
+                    else
+                    {
+                        itemlist.at(i)->hide();
+                    }
+                }
+                break;
+            }
+            case price:
+            {
+                QString itemId,itemName,itemCategory,itemPrice;
+                for (int i = 0; i < itemlist.count(); ++i)
+                {
+                    itemId = itemlist.at(i)->getId();
+                    itemName = itemlist.at(i)->getName();
+                    itemCategory = itemlist.at(i)->getCategory();
+                    itemPrice = itemlist.at(i)->getPrice();
+
+                    if(isContains(itemPrice,searchText))
+                    {
+                        itemlist.at(i)->show();
+                    }
+                    else
+                    {
+                        itemlist.at(i)->hide();
+                    }
+                }
+
+                break;
+            }
         }
     }
     else
     {
-        cmd = "SELECT * FROM mstTblMenu ORDER BY id";
+        for (int i = 0; i < itemlist.count(); ++i)
+        {
+            itemlist.at(i)->show();
+        }
     }
-
-    this->deleteVecterData();
-    databaseCon d;
-    qDebug() << "AddOrderItem.cpp (on_btnSearch_clicked) : constr " << cmd ;
-    QSqlQuery* q = d.execute(cmd);
-
-    while( q->next() )
-    {
-        qDebug() << "AddOrderItem.cpp (on_btnSearch_clicked) : id " << q->value("id").toString() ;
-        OrderItemData *item = new OrderItemData(q->value("id").toString(),q->value("itemName").toString(),q->value("category").toString(),q->value("Price").toString(),myParent);
-        itemlist.push_back(item);
-        ui->displayAddOrder->addWidget(item);
-    }
-    delete q;
-    */
 }
 
 void AddOrderItem::on_SearchTextBox_returnPressed()

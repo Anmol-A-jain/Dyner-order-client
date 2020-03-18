@@ -37,6 +37,26 @@ OrderItemData::~OrderItemData()
     delete ui;
 }
 
+QString OrderItemData::getId()
+{
+    return ui->lblId->text();
+}
+
+QString OrderItemData::getName()
+{
+    return ui->lblName->text();
+}
+
+QString OrderItemData::getCategory()
+{
+    return ui->lblCategory->text();
+}
+
+QString OrderItemData::getPrice()
+{
+    return ui->lblRate->text();
+}
+
 void OrderItemData::on_btnPlus_clicked()
 {
     if(ui->txtQty->text().toDouble() == 0.0)

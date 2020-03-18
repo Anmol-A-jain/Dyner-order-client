@@ -21,6 +21,7 @@ public:
     void deleteVecterData();    
     void paintEvent(QPaintEvent *event) override;
     void updateCategorylist();
+    bool isContains(QString text,QString subText);
 
 private slots:
     void on_menuColumn_currentIndexChanged(int index);

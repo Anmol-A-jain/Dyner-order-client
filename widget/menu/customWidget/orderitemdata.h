@@ -17,6 +17,11 @@ public:
     explicit OrderItemData(menuData* item,double qty = 0,QWidget *parent = nullptr);
     ~OrderItemData();
 
+    QString getId();
+    QString getName();
+    QString getCategory();
+    QString getPrice();
+
 private slots:
 
     void on_btnPlus_clicked();
