@@ -26,10 +26,12 @@ OrderItemData::OrderItemData(menuData* item,double qty, QWidget *parent) :
     ui->lblId->setText(item->id);
     ui->lblName->setText(item->name);
     ui->lblCategory->setText(item->category);
-    ui->lblRate->setText(QString::number(item->price));
+    ui->lblRate->setText("Rs."+QString::number(item->price));
 
     ui->txtQty->setButtonSymbols(QAbstractSpinBox::NoButtons);
-    GlobalData::setShadow(this);
+    GlobalData::setShadow(this,QColor(0, 0, 0),0,10);
+    GlobalData::setShadow(ui->btnPlus,QColor(52, 149, 254),0,10);
+    GlobalData::setShadow(ui->btnMinus,QColor(255,0,0),0,10);
 }
 
 OrderItemData::~OrderItemData()
@@ -77,6 +79,7 @@ void OrderItemData::on_btnPlus_clicked()
         {
             q->at(i)->qty = q->at(i)->qty+1;
             qDebug() << "OrderItemData (on_btnPlus_clicked) : qty " << q->at(i)->qty;
+            break;
         }
     }
 

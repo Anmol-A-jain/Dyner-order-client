@@ -23,8 +23,11 @@ class GlobalData
 public:
     GlobalData();
 
+    QString getTagName(int tagname);
+    QString getattribute(int tagname);
+
     //shadow effect function
-    static void setShadow(QWidget* widget);
+    static void setShadow(QWidget* widget, QColor color = QColor(0,0,0),qreal real = 0.0, qreal radius = 5.0);
 
     //menu data Functions
     static void setMenuItem(QString id,QString name,QString category,double price);
@@ -36,6 +39,8 @@ public:
     //vector to store menu in dynamic array
     static QVector<menuData*> menuDataList;
     static QVector<orderData*> CartItem;
+
+    enum data{clientName};
 
 private:
     QHash<int,QString> tagname;

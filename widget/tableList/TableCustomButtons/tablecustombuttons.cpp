@@ -12,7 +12,7 @@ TableCustomButtons::TableCustomButtons(int tbl,QString name,QWidget *parent) :
     ui->btnTable->setText(name);
     this->tbl = tbl;
 
-    GlobalData::setShadow(this);
+    GlobalData::setShadow(this,QColor(240,230,140));
 }
 
 TableCustomButtons::~TableCustomButtons()

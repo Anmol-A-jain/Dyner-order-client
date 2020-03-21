@@ -25,6 +25,7 @@ public:
 
     void setWidget(QWidget* child);
     void setTitle(QString title);
+    void setCurrentId(QString id);
     void ChangeBoolvalue(bool value);
 
     void callCartObject(QString name,QString mblNo);

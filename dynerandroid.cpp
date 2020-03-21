@@ -7,6 +7,7 @@
 #include "widget/serverConnection/serverconnection.h"
 #include "data/allaction.h"
 #include "data/globaldata.h"
+#include "data/xmlmanipulation.h"
 #include "widget/tableList/tablelist.h"
 #include "widget/Cart/cart.h"
 #include "widget/menu/addorderitem.h"
@@ -24,7 +25,7 @@ DynerAndroid::DynerAndroid(QWidget *parent)
     ui->windowContainer->addWidget(childFrame);
 
     ui->btnHome->hide();
-    ui->pushButton->hide();
+    ui->lblCurrentId->hide();
 
     this->menuList = nullptr;
 
@@ -43,7 +44,7 @@ QWidget* DynerAndroid::newWindow(int option,int tblNo)
         case serverConnectionWindow :
         {
             ui->btnHome->hide();
-            ui->pushButton->hide();
+            ui->lblCurrentId->hide();
             logWindow = new serverConnection(this);
             return logWindow;
             break;
@@ -51,7 +52,7 @@ QWidget* DynerAndroid::newWindow(int option,int tblNo)
         case cartWindow:
         {
             ui->btnHome->show();
-            ui->pushButton->show();
+            ui->lblCurrentId->show();
             if(tblNo != 0)
             {
                 cart = new Cart(tblNo,this);
@@ -63,7 +64,7 @@ QWidget* DynerAndroid::newWindow(int option,int tblNo)
         case tableListWindow :
         {
             ui->btnHome->show();
-            ui->pushButton->show();
+            ui->lblCurrentId->show();
             if(tbl != 0)
             {
                 tableButtons = new tableList(tbl,this);
@@ -74,14 +75,14 @@ QWidget* DynerAndroid::newWindow(int option,int tblNo)
         case closeWindowWidget :
         {
             ui->btnHome->hide();
-            ui->pushButton->hide();
+            ui->lblCurrentId->hide();
             return new CloseWindow(ui->widgetTitle);
             break;
         }
         case menuListWidget :
         {
             ui->btnHome->show();
-            ui->pushButton->show();
+            ui->lblCurrentId->show();
             this->currentTbl = tblNo;
             return new AddOrderItem(tblNo,this);
             break;
@@ -96,14 +97,14 @@ void DynerAndroid::dinningTableList(int tbl)
     {
         this->tbl = tbl;
     }
-    logWindow = newWindow(tableListWindow);
-    setWidget(logWindow);
+    tableButtons = newWindow(tableListWindow);
+    setWidget(tableButtons);
 }
 
 void DynerAndroid::cartWidgetWindow(int tblNo)
 {
-    logWindow = newWindow(cartWindow,tblNo);
-    setWidget(logWindow);
+    cart = newWindow(cartWindow,tblNo);
+    setWidget(cart);
 }
 
 void DynerAndroid::logInWidget()
@@ -147,6 +148,11 @@ void DynerAndroid::setWidget(QWidget *child)
 void DynerAndroid::setTitle(QString title)
 {
     ui->widgetTitle->setText(title);
+}
+
+void DynerAndroid::setCurrentId(QString id)
+{
+    ui->lblCurrentId->setText("Id: " + id);
 }
 
 void DynerAndroid::ChangeBoolvalue(bool value)

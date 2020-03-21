@@ -34,6 +34,8 @@ Cart::Cart(int tbl,QWidget *parent) :
     QString title = "Cart : Table";
     static_cast<DynerAndroid*>(myParent)->setTitle(title +" : "+ QString::number(tbl));
     loadData();
+
+    GlobalData::setShadow(ui->AddItem,QColor(52, 149, 254));
 }
 
 Cart::~Cart()

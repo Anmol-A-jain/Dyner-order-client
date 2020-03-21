@@ -63,6 +63,16 @@ public:
         exec();
     }
 
+    void disconnectAndExit()
+    {
+        if(socket->state() == QTcpSocket::ConnectedState)
+        {
+            socket->disconnectFromHost();
+            exit(0);
+        }
+        exit(0);
+    }
+
 public slots :
 
     void myConnected()

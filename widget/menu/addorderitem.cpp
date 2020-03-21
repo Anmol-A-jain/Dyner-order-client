@@ -25,6 +25,9 @@ AddOrderItem::AddOrderItem(int tblNo,QWidget *parent) :
 
     ui->categoryList->hide();
     this->loadData();
+
+    GlobalData::setShadow(ui->btnsubmit,QColor(52, 149, 254),0,10);
+    GlobalData::setShadow(ui->btnSearch);
 }
 
 AddOrderItem::~AddOrderItem()

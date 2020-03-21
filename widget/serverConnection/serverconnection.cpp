@@ -3,6 +3,8 @@
 #include "ui_serverconnection.h"
 #include <QDebug>
 #include "data/globaldata.h"
+#include "data/xmlmanipulation.h"
+#include <QMessageBox>
 
 QVector<findByPing*> serverConnection::threadList;
 
@@ -15,6 +17,9 @@ serverConnection::serverConnection(QWidget *parent) :
 
     QString title = "Log In";
     static_cast<DynerAndroid*>(myParent)->setTitle(title);
+
+    GlobalData g;
+    ui->txtName->setText(XmlManipulation::getData(g.getTagName(g.clientName),g.getattribute(g.clientName)));
 
     connect(serverSocket::serverClient,&QTcpSocket::stateChanged,this,&serverConnection::stateChanged);
 
@@ -52,13 +57,20 @@ void serverConnection::deleteAllThread()
 {
     for(int i = 0; i < threadList.size(); ++i)
     {
-        threadList[i]->exit(0);
+        threadList[i]->disconnectAndExit();
     }
     qDebug() << "serverConnection (deleteAllThread) : deleted thread all thread =";
 }
 
 void serverConnection::on_btnConnect_clicked()
 {
+    if(ui->txtName->text().isEmpty())
+    {
+        QMessageBox::information(this,"Name!","Please Enter Your Name");
+        return;
+    }
+    GlobalData g;
+    XmlManipulation::setData(g.getTagName(g.clientName),g.getattribute(g.clientName),ui->txtName->text());
     qDebug() << "serverConnection (on_btnConnect_clicked) : state : " << serverSocket::serverClient->state() ;
 
     if(ui->txtIp->text() == "")
@@ -91,6 +103,14 @@ void serverConnection::stateChanged(QAbstractSocket::SocketState state)
 
 void serverConnection::on_btnauto_clicked()
 {
+    if(ui->txtName->text().isEmpty())
+    {
+        QMessageBox::information(this,"Name!","Please Enter Your Name");
+        return;
+    }
+
+    GlobalData g;
+    XmlManipulation::setData(g.getTagName(g.clientName),g.getattribute(g.clientName),ui->txtName->text());
     const QHostAddress &localhost = QHostAddress::LocalHost;
     QString ipaddress;
     for(const QHostAddress &address : QNetworkInterface::allAddresses() )

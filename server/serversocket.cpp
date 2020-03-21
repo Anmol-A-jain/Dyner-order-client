@@ -4,6 +4,7 @@
 #include "widget/serverConnection/serverconnection.h"
 #include "data/allaction.h"
 #include "data/globaldata.h"
+#include "data/xmlmanipulation.h"
 #include "dynerandroid.h"
 
 QTcpSocket* serverSocket::serverClient = new QTcpSocket();
@@ -24,8 +25,29 @@ void serverSocket::connectToSerever(QString ip)
 void serverSocket::myReadReady()
 {
     // get the information
-    QByteArray dataIn = serverClient->readAll();
+    //serverClient->waitForReadyRead(1000);
+    int bytes = serverClient->bytesAvailable();
+    QByteArray dataIn ;//= serverClient->readAll();
+    qDebug() << "serverConnection (myReadReady) : Data available count: " << bytes;
+
+    while(bytes != 0)
+    {
+        if(bytes < 1000 )
+        {
+            dataIn.append(serverClient->readAll());
+            bytes = 0;
+        }
+        else
+        {
+            dataIn.append(serverClient->read(1000));
+            bytes -= 1000;
+        }
+        qDebug() << "serverConnection (myReadReady) : Data in: " << dataIn;
+        qDebug() << "serverConnection (myReadReady) : Data count: " << bytes;
+    }
+
     qDebug() << "serverConnection (myReadReady) : Data in: " << dataIn;
+    qDebug() << "serverConnection (myReadReady) : Data count: " << bytes;
 
     QDataStream in(&dataIn,QIODevice::ReadWrite);
 
@@ -100,11 +122,14 @@ void serverSocket::myConnected()
     QByteArray data ;
     QDataStream out(&data,QIODevice::ReadWrite);
     qint16 i = ALLAction::getTotaltableNo;
-    out << i ;
+
+    GlobalData g;
+    QString name = XmlManipulation::getData(g.getTagName(g.clientName),g.getattribute(g.clientName));
+    out << i << name ;
     qDebug() << "serverConnection (myConnected) : data to send : " << data ;
     //sending req for total table count
     serverSocket::serverClient->write(data);
-    serverSocket::serverClient->waitForReadyRead(2000);
+    serverSocket::serverClient->waitForBytesWritten(1000);
 
     QByteArray data1 ;
     QDataStream out1(&data1,QIODevice::ReadWrite);

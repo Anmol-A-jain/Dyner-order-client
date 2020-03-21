@@ -155,7 +155,7 @@ border-radius:10px;</string>
             <property name="font">
              <font>
               <family>MS Shell Dlg 2</family>
-              <pointsize>20</pointsize>
+              <pointsize>15</pointsize>
               <weight>50</weight>
               <italic>false</italic>
               <bold>false</bold>
@@ -169,7 +169,6 @@ border-radius:10px;</string>
 {
 	color:;
 	color: white;
-	font: 20pt &quot;MS Shell Dlg 2&quot;;
 	border-radius:10px;
 }</string>
             </property>
@@ -198,7 +197,7 @@ border-radius:10px;</string>
            </spacer>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton">
+           <widget class="QLabel" name="lblCurrentId">
             <property name="minimumSize">
              <size>
               <width>50</width>
@@ -206,11 +205,13 @@ border-radius:10px;</string>
              </size>
             </property>
             <property name="styleSheet">
-             <string notr="true">background-color: rgba(0, 0, 0, 0);
-border-radius:10px;</string>
+             <string notr="true">color: rgb(255, 255, 255);</string>
             </property>
             <property name="text">
              <string/>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
             </property>
            </widget>
           </item>
