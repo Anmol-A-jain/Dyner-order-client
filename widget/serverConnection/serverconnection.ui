@@ -48,15 +48,27 @@
      <item>
       <widget class="QWidget" name="verticalWidget" native="true">
        <property name="styleSheet">
-        <string notr="true">border-radius:100%;
-background-color: rgba(100, 100, 100,0.3);</string>
+        <string notr="true">#verticalWidget
+{
+	border-radius:120%;
+	background-color: rgba(80, 80, 80,0.7);
+}</string>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout">
         <property name="spacing">
          <number>0</number>
         </property>
         <property name="leftMargin">
-         <number>1</number>
+         <number>20</number>
+        </property>
+        <property name="topMargin">
+         <number>20</number>
+        </property>
+        <property name="rightMargin">
+         <number>20</number>
+        </property>
+        <property name="bottomMargin">
+         <number>20</number>
         </property>
         <item>
          <widget class="QPushButton" name="icon">
@@ -67,7 +79,10 @@ background-color: rgba(100, 100, 100,0.3);</string>
            </size>
           </property>
           <property name="styleSheet">
-           <string notr="true">border-image: url(:/img/img/logo.png);</string>
+           <string notr="true">border-image: url(:/img/img/logo.png);
+
+background-color: rgba(255, 255, 255,0.3);
+border-radius:100%;</string>
           </property>
           <property name="text">
            <string/>
@@ -132,8 +147,7 @@ background-color: rgba(100, 100, 100,0.3);</string>
         </size>
        </property>
        <property name="styleSheet">
-        <string notr="true">background-color: rgba(0, 0, 0, 0);;
-border-bottom: 2px solid rgb(97, 97, 97);
+        <string notr="true">background-color: rgba(0, 0, 0, 0.3);
 color:white;</string>
        </property>
        <property name="placeholderText">
@@ -160,6 +174,9 @@ color:white;</string>
     <spacer name="verticalSpacer_8">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Fixed</enum>
      </property>
      <property name="sizeHint" stdset="0">
       <size>
@@ -342,8 +359,7 @@ border-radius:5px;</string>
             </size>
            </property>
            <property name="styleSheet">
-            <string notr="true">background-color: rgba(0, 0, 0, 0);;
-border-bottom: 2px solid rgb(97, 97, 97);
+            <string notr="true">background-color: rgba(0, 0, 0, 0.3);
 color:white;</string>
            </property>
            <property name="text">

@@ -15,7 +15,8 @@ struct menuData
 struct orderData
 {
     menuData* item;
-    double qty;
+    double qty = 0;
+    QString note = "";
 };
 
 class GlobalData

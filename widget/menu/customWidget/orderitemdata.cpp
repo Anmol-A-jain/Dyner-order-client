@@ -3,7 +3,7 @@
 #include <QDebug>
 #include <QMessageBox>
 
-OrderItemData::OrderItemData(menuData* item,double qty, QWidget *parent) :
+OrderItemData::OrderItemData(menuData* item,double qty,QString note, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::OrderItemData)
 {
@@ -11,16 +11,31 @@ OrderItemData::OrderItemData(menuData* item,double qty, QWidget *parent) :
     myparent = parent;
     this->item = item;
 
-    if(qty > 0.0 ) ui->txtQty->setValue(qty);
+    ui->txtNote->hide();
 
+    //set data if data came from cart.cpp
+    if(qty > 0.0 )
+    {
+        ui->txtNote->show();
+        ui->txtQty->setValue(qty);
+        ui->txtNote->setText(note);
+    }
+
+
+    //set data if data came from addOrderItem.cpp
     QVector<orderData*>* q = &GlobalData::CartItem;
 
-    for (int i = 0; i < q->count(); ++i)
+    if(qty == 0.0)
     {
-       if(q->at(i)->item->id == item->id)
-       {
-            ui->txtQty->setValue(q->at(i)->qty);
-       }
+        for (int i = 0; i < q->count(); ++i)
+        {
+           if(q->at(i)->item->id == item->id)
+           {
+                ui->txtNote->show();
+                ui->txtQty->setValue(q->at(i)->qty);
+                ui->txtNote->setText(q->at(i)->note);
+           }
+        }
     }
 
     ui->lblId->setText(item->id);
@@ -61,12 +76,13 @@ QString OrderItemData::getPrice()
 
 void OrderItemData::on_btnPlus_clicked()
 {
+    ui->txtNote->show();
     if(ui->txtQty->text().toDouble() == 0.0)
     {
         ui->txtQty->stepUp();
 
         GlobalData::setItemQty(item,ui->txtQty->text().toDouble());
-
+        ui->txtNote->show();
         return;
     }
     ui->txtQty->stepUp();
@@ -100,6 +116,9 @@ void OrderItemData::on_btnMinus_clicked()
                qDebug() << "OrderItemData (on_btnMinus_clicked) : count befor " << q->count();
                q->remove(i);
                qDebug() << "OrderItemData (on_btnMinus_clicked) : count after " << q->count();
+
+               ui->txtNote->clear();
+               ui->txtNote->hide();
                break;
            }
         }
@@ -120,6 +139,22 @@ void OrderItemData::on_btnMinus_clicked()
        {
            q->at(i)->qty = q->at(i)->qty-1;
            qDebug() << "OrderItemData (on_btnMinus_clicked) : qty " << q->at(i)->qty;
+           break;
+       }
+    }
+}
+
+void OrderItemData::on_txtNote_textChanged(const QString &arg1)
+{
+    QVector<orderData*>* q = &GlobalData::CartItem;
+
+    for (int i = 0; i < q->count(); ++i)
+    {
+       if(q->at(i)->item->id == item->id)
+       {
+           q->at(i)->note = arg1;
+           qDebug() << "OrderItemData (on_txtNote_textChanged) : qty " << q->at(i)->note;
+           break;
        }
     }
 }

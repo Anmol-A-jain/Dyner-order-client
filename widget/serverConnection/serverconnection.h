@@ -24,7 +24,6 @@ class serverConnection : public QWidget
 public:
     explicit serverConnection(QWidget *parent = nullptr);
     ~serverConnection();
-    void connectToServer(QString ip);
     static void deleteAllThread();
 
 private slots:
@@ -33,6 +32,8 @@ private slots:
     void stateChanged(QAbstractSocket::SocketState state);
 
     void on_btnauto_clicked();
+
+    void connectToServer(QString ip);
 
 private:
     Ui::serverConnection *ui;
@@ -47,7 +48,7 @@ class findByPing : public QThread
 {
     Q_OBJECT
 public:
-    findByPing(QString ipAddress,QWidget* parent = nullptr)
+    findByPing(QString ipAddress,serverConnection* parent = nullptr)
     {
         myParent = parent;
         this->currIp = ipAddress;
@@ -77,15 +78,18 @@ public slots :
 
     void myConnected()
     {
-        static_cast<serverConnection*>(myParent)->connectToServer(currIp);
+        emit connectToServer(currIp);
         qDebug() << "findByPing (myConnected) : state : " << socket->state() ;
     }
+
+signals:
+    void connectToServer(QString currIp);
 
 private:
     QString currIp;
     QTcpSocket* socket;
     bool isActive;
-    QWidget* myParent;
+    serverConnection* myParent;
 };
 
 #endif // SERVERCONNECTION_H

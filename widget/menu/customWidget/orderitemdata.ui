@@ -142,6 +142,13 @@
           </layout>
          </widget>
         </item>
+        <item>
+         <widget class="QLineEdit" name="txtNote">
+          <property name="placeholderText">
+           <string>Note</string>
+          </property>
+         </widget>
+        </item>
        </layout>
       </item>
       <item>
@@ -175,6 +182,9 @@ border-radius:5px;</string>
           <width>100</width>
           <height>16777215</height>
          </size>
+        </property>
+        <property name="readOnly">
+         <bool>true</bool>
         </property>
        </widget>
       </item>

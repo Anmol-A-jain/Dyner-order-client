@@ -29,18 +29,19 @@ void serverSocket::myReadReady()
     int bytes = serverClient->bytesAvailable();
     QByteArray dataIn ;//= serverClient->readAll();
     qDebug() << "serverConnection (myReadReady) : Data available count: " << bytes;
+    int bytesToRead = 1000;
 
     while(bytes != 0)
     {
-        if(bytes < 1000 )
+        if(bytes < bytesToRead )
         {
             dataIn.append(serverClient->readAll());
             bytes = 0;
         }
         else
         {
-            dataIn.append(serverClient->read(1000));
-            bytes -= 1000;
+            dataIn.append(serverClient->read(bytesToRead));
+            bytes -= bytesToRead;
         }
         qDebug() << "serverConnection (myReadReady) : Data in: " << dataIn;
         qDebug() << "serverConnection (myReadReady) : Data count: " << bytes;

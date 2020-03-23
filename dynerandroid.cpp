@@ -27,8 +27,6 @@ DynerAndroid::DynerAndroid(QWidget *parent)
     ui->btnHome->hide();
     ui->lblCurrentId->hide();
 
-    this->menuList = nullptr;
-
     GlobalData::deleteCartVectordata();
 }
 
@@ -191,7 +189,7 @@ void DynerAndroid::keyPressEvent(QKeyEvent *event)
             this->menuWidget(this->currentTbl);
             return;
         }
-        if(childFrame == tableButtons)
+        if(childFrame == tableButtons || childFrame == logWindow)
         {
             if(isExiting)
             {

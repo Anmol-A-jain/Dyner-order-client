@@ -36,6 +36,7 @@ Cart::Cart(int tbl,QWidget *parent) :
     loadData();
 
     GlobalData::setShadow(ui->AddItem,QColor(52, 149, 254));
+
 }
 
 Cart::~Cart()
@@ -54,7 +55,7 @@ void Cart::loadData()
 
     for (int i = 0; i < q->count(); ++i)
     {
-        OrderItemData* item = new OrderItemData(q->at(i)->item,q->at(i)->qty);
+        OrderItemData* item = new OrderItemData(q->at(i)->item,q->at(i)->qty,q->at(i)->note);
         ui->verticalLayout_3->addWidget(item);
     }
 }
@@ -99,20 +100,28 @@ void Cart::on_AddItem_clicked()
     out << i ;
     out << tbl ;
     out << count ;
-    out << name << mblNo;
+    out << name << mblNo ;
 
     qDebug() << "Cart (on_AddItem_clicked) : cart data  : " << tbl << ":" << count ;
 
     for (int i = 0; i < q->count(); ++i)
     {
         QString id = q->at(i)->item->id;
+        QString note = q->at(i)->note;
         double qty = q->at(i)->qty;
-        qDebug() << "Cart (on_AddItem_clicked) : cart data  : " << id << ":" << qty ;
+
+        qDebug() << "Cart (on_AddItem_clicked) : cart data  : " ;
+        qDebug() << "Cart (on_AddItem_clicked) : id : " << id ;
+        qDebug() << "Cart (on_AddItem_clicked) : qty : " <<  qty ;
+        qDebug() << "Cart (on_AddItem_clicked) : note : " <<  note ;
+
         out << id ;
+        out << note;
         out << qty ;
     }
 
     qDebug() << "Cart (on_AddItem_clicked) : data to send : " << data ;
+
     //sending req for total table count
     serverSocket::serverClient->write(data);
     serverSocket::serverClient->flush();
@@ -121,18 +130,5 @@ void Cart::on_AddItem_clicked()
 
     QMessageBox::information(this,"Order Placed","Order has been Placed");
     static_cast<DynerAndroid*>(myParent)->dinningTableList();
-
-    // get the information
-
-//    QDataStream in(&data,QIODevice::ReadWrite);
-
-//    qint16 action;
-//    in >> action >> tbl >> count;
-//    QString id;
-//    double qty;
-//    in >> id >> qty;
-
-//    qDebug() << "Cart (on_AddItem_clicked) : cart data  : " << tbl << ":" << count ;
-//    qDebug() << "Cart (on_AddItem_clicked) : cart data  : " << id << ":" << qty ;
 
 }

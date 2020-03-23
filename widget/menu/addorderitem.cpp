@@ -44,7 +44,7 @@ void AddOrderItem::loadData()
     for( int i = 0 ; q.count() > i ;++i )
     {
         qDebug() << "AddOrderItem.cpp (loadData) : id " << q[i]->id; //q->value("id").toString();
-        OrderItemData *item = new OrderItemData(q[i],0,myParent);
+        OrderItemData *item = new OrderItemData(q[i],0,"",myParent);
         itemlist.push_back(item);
         ui->displayAddOrder->addWidget(item);
     }

@@ -136,6 +136,7 @@ void serverConnection::on_btnauto_clicked()
         findByPing* f = new findByPing(currIp,this);
         f->start();
         serverConnection::threadList.push_back(f);
+        connect(f,SIGNAL(connectToServer(QString)),this,SLOT(connectToServer(QString)));
     }
     ui->btnauto->hide();
     ui->label_2->hide();

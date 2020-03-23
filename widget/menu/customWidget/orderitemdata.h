@@ -14,7 +14,7 @@ class OrderItemData : public QWidget
     Q_OBJECT
 
 public:
-    explicit OrderItemData(menuData* item,double qty = 0,QWidget *parent = nullptr);
+    explicit OrderItemData(menuData* item,double qty = 0,QString note = "",QWidget *parent = nullptr);
     ~OrderItemData();
 
     QString getId();
@@ -27,6 +27,8 @@ private slots:
     void on_btnPlus_clicked();
 
     void on_btnMinus_clicked();
+
+    void on_txtNote_textChanged(const QString &arg1);
 
 private:
     Ui::OrderItemData *ui;
