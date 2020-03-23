@@ -61,6 +61,7 @@ void serverSocket::myReadReady()
     {
         case ALLAction::error :
         {
+            QMessageBox::warning(myParent,"Not connected","Kitchen is not connected");
             qDebug() << "serverConnection (myReadReady) : list : " << dataIn;
             break;
         }
