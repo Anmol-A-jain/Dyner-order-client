@@ -61,7 +61,6 @@ void serverSocket::myReadReady()
     {
         case ALLAction::error :
         {
-            QMessageBox::warning(myParent,"Not connected","Kitchen is not connected");
             qDebug() << "serverConnection (myReadReady) : list : " << dataIn;
             break;
         }
@@ -104,6 +103,35 @@ void serverSocket::myReadReady()
             in >> name >> mblNo;
             qDebug() << "serverConnection (myReadReady) : cust data : " << name << ":" << mblNo ;
             static_cast<DynerAndroid*>(myParent)->callCartObject(name,mblNo);
+            break;
+        }
+        case ALLAction::showNotification:
+        {
+            qint16 type = 0;
+            QString msg;
+            in >> type >> msg;
+
+            enum msgType{warning,informative,critical};
+
+            switch (type)
+            {
+                case warning:
+                {
+                    QMessageBox::warning(myParent,"Warning",msg);
+                    break;
+                }
+                case informative:
+                {
+                    QMessageBox::information(myParent,"Information",msg);
+                    break;
+                }
+                case critical:
+                {
+                    QMessageBox::critical(myParent,"Error",msg);
+                    break;
+                }
+            }
+
             break;
         }
         default:

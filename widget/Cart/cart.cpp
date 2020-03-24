@@ -95,6 +95,11 @@ void Cart::on_AddItem_clicked()
     QVector<orderData*>* q = &GlobalData::CartItem;
 
     qint16 count = q->count();
+    if(count < 1)
+    {
+        QMessageBox::information(this,"Empty","Cart Is empty");
+        return;
+    }
     QString mblNo = ui->txtMblNo->text() ,name = ui->txtCustName->text();
 
     out << i ;
@@ -128,7 +133,6 @@ void Cart::on_AddItem_clicked()
 
     q->clear();
 
-    QMessageBox::information(this,"Order Placed","Order has been Placed");
     static_cast<DynerAndroid*>(myParent)->dinningTableList();
 
 }
