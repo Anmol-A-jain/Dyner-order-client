@@ -137,10 +137,11 @@ void DynerAndroid::closeWidget()
 void DynerAndroid::setWidget(QWidget *child)
 {
     QWidget* temp = childFrame;
+    temp->hide();
     //childFrame->deleteLater();
     childFrame = child ;
     ui->windowContainer->addWidget(childFrame);
-    delete temp;
+    temp->deleteLater();
 }
 
 void DynerAndroid::setTitle(QString title)
