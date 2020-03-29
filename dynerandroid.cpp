@@ -28,6 +28,8 @@ DynerAndroid::DynerAndroid(QWidget *parent)
     ui->lblCurrentId->hide();
 
     GlobalData::deleteCartVectordata();
+
+    this->isExiting = false;
 }
 
 DynerAndroid::~DynerAndroid()

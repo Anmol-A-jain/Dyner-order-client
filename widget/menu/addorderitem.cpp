@@ -54,7 +54,7 @@ void AddOrderItem::deleteVecterData()
 {
     for (int i = 0; i < itemlist.count(); ++i)
     {
-        delete itemlist[i];
+        itemlist[i]->deleteLater();
     }
     itemlist.clear();
 }

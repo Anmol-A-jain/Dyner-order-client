@@ -137,7 +137,7 @@
            <x>0</x>
            <y>0</y>
            <width>483</width>
-           <height>588</height>
+           <height>572</height>
           </rect>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -192,6 +192,12 @@
        <layout class="QHBoxLayout" name="horizontalLayout">
         <item>
          <widget class="QComboBox" name="menuColumn">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>40</height>
+           </size>
+          </property>
           <item>
            <property name="text">
             <string>All</string>
@@ -220,13 +226,33 @@
          </widget>
         </item>
         <item>
-         <widget class="QComboBox" name="categoryList"/>
+         <widget class="QComboBox" name="categoryList">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>40</height>
+           </size>
+          </property>
+         </widget>
         </item>
         <item>
-         <widget class="QLineEdit" name="SearchTextBox"/>
+         <widget class="QLineEdit" name="SearchTextBox">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>40</height>
+           </size>
+          </property>
+         </widget>
         </item>
         <item>
          <widget class="QPushButton" name="btnSearch">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>40</height>
+           </size>
+          </property>
           <property name="text">
            <string>Search</string>
           </property>

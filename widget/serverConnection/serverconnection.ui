@@ -264,34 +264,12 @@ border-radius:5px;</string>
       <number>0</number>
      </property>
      <item>
-      <widget class="QLabel" name="label_3">
-       <property name="styleSheet">
-        <string notr="true">border-bottom:2px solid black;
-</string>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
-     </item>
-     <item>
       <widget class="QLabel" name="label_2">
        <property name="text">
         <string>Or</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLabel" name="label">
-       <property name="styleSheet">
-        <string notr="true">border-bottom:2px solid black;
-</string>
-       </property>
-       <property name="text">
-        <string/>
        </property>
       </widget>
      </item>

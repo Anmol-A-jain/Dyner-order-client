@@ -139,6 +139,7 @@ void serverConnection::on_btnauto_clicked()
         connect(f,SIGNAL(connectToServer(QString)),this,SLOT(connectToServer(QString)));
     }
     ui->btnauto->hide();
+    ui->btnConnect->hide();
     ui->label_2->hide();
 }
 
