@@ -41,7 +41,7 @@ public:
     static QVector<menuData*> menuDataList;
     static QVector<orderData*> CartItem;
 
-    enum data{clientName};
+    enum data{clientName,clientPass};
 
 private:
     QHash<int,QString> tagname;

@@ -9,6 +9,9 @@ GlobalData::GlobalData()
 {
     this->tagname.insert(data::clientName,"waiterName");
     this->attribute.insert(data::clientName,"Name");
+
+    this->tagname.insert(data::clientPass,"waiterName");
+    this->attribute.insert(data::clientPass,"pass");
 }
 
 QString GlobalData::getTagName(int tagname)

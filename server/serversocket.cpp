@@ -154,8 +154,9 @@ void serverSocket::myConnected()
     qint16 i = ALLAction::getTotaltableNo;
 
     GlobalData g;
-    QString name = XmlManipulation::getData(g.getTagName(g.clientName),g.getattribute(g.clientName));
-    out << i << name ;
+    QString user = XmlManipulation::getData(g.getTagName(g.clientName),g.getattribute(g.clientName));
+    QString pass = XmlManipulation::getData(g.getTagName(g.clientPass),g.getattribute(g.clientPass));
+    out << i << user << pass ;
     qDebug() << "serverConnection (myConnected) : data to send : " << data ;
     //sending req for total table count
     serverSocket::serverClient->write(data);

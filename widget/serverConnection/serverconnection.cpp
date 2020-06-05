@@ -19,7 +19,7 @@ serverConnection::serverConnection(QWidget *parent) :
     static_cast<DynerAndroid*>(myParent)->setTitle(title);
 
     GlobalData g;
-    ui->txtName->setText(XmlManipulation::getData(g.getTagName(g.clientName),g.getattribute(g.clientName)));
+    ui->txtUserName->setText(XmlManipulation::getData(g.getTagName(g.clientName),g.getattribute(g.clientName)));
 
     connect(serverSocket::serverClient,&QTcpSocket::stateChanged,this,&serverConnection::stateChanged);
 
@@ -64,13 +64,16 @@ void serverConnection::deleteAllThread()
 
 void serverConnection::on_btnConnect_clicked()
 {
-    if(ui->txtName->text().isEmpty())
+    QString username = ui->txtUserName->text();
+    QString pass = ui->txtPass->text();
+    if(username.isEmpty() || pass.isEmpty())
     {
-        QMessageBox::information(this,"Name!","Please Enter Your Name");
+        QMessageBox::warning(this,"Empty!","Please fill all fields");
         return;
     }
     GlobalData g;
-    XmlManipulation::setData(g.getTagName(g.clientName),g.getattribute(g.clientName),ui->txtName->text());
+    XmlManipulation::setData(g.getTagName(g.clientName),g.getattribute(g.clientName),username);
+    XmlManipulation::setData(g.getTagName(g.clientPass),g.getattribute(g.clientPass),pass);
     qDebug() << "serverConnection (on_btnConnect_clicked) : state : " << serverSocket::serverClient->state() ;
 
     if(ui->txtIp->text() == "")
@@ -103,14 +106,18 @@ void serverConnection::stateChanged(QAbstractSocket::SocketState state)
 
 void serverConnection::on_btnauto_clicked()
 {
-    if(ui->txtName->text().isEmpty())
+    QString username = ui->txtUserName->text();
+    QString pass = ui->txtPass->text();
+    if(username.isEmpty() || pass.isEmpty())
     {
-        QMessageBox::information(this,"Name!","Please Enter Your Name");
+        QMessageBox::warning(this,"Empty!","Please fill all fields");
         return;
     }
-
     GlobalData g;
-    XmlManipulation::setData(g.getTagName(g.clientName),g.getattribute(g.clientName),ui->txtName->text());
+    XmlManipulation::setData(g.getTagName(g.clientName),g.getattribute(g.clientName),username);
+    XmlManipulation::setData(g.getTagName(g.clientPass),g.getattribute(g.clientPass),pass);
+
+
     const QHostAddress &localhost = QHostAddress::LocalHost;
     QString ipaddress;
     for(const QHostAddress &address : QNetworkInterface::allAddresses() )
