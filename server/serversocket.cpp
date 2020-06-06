@@ -6,6 +6,7 @@
 #include "data/globaldata.h"
 #include "data/xmlmanipulation.h"
 #include "dynerandroid.h"
+#include "widget/login/loginwidget.h"
 
 QTcpSocket* serverSocket::serverClient = new QTcpSocket();
 
@@ -107,10 +108,19 @@ void serverSocket::myReadReady()
         }
         case ALLAction::showNotification:
         {
+
+
             qint16 type = 0;
             QString msg;
             in >> type >> msg;
 
+            QWidget* loginWidget = static_cast<DynerAndroid*>(myParent)->getLoginWidget();
+
+            if(loginWidget != nullptr)
+            {
+                static_cast<LogInWidget*>(loginWidget)->setMsg(msg);
+                return;
+            }
             enum msgType{warning,informative,critical};
 
             switch (type)

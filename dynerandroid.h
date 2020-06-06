@@ -33,12 +33,15 @@ public:
 
     void keyPressEvent(QKeyEvent* event) override;
 
+    QWidget* getLoginWidget();
+
 private slots:
     void on_btnHome_clicked();
 
 private:
     Ui::DynerAndroid *ui;
     QWidget* childFrame;
+
     QWidget* serverConnectionWidget;
     QWidget* tableButtons;
     QWidget* cart;

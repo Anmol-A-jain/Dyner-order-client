@@ -15,6 +15,8 @@ public:
     explicit LogInWidget(QWidget *parent = nullptr);
     ~LogInWidget();
 
+    void setMsg(QString msg);
+
 private slots:
     void on_btnLogin_clicked();
 

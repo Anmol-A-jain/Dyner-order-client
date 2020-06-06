@@ -252,3 +252,12 @@ void DynerAndroid::keyPressEvent(QKeyEvent *event)
 
     event->accept();
 }
+
+QWidget *DynerAndroid::getLoginWidget()
+{
+    if(childFrame == loginWindow)
+    {
+        return loginWindow;
+    }
+    return nullptr;
+}

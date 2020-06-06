@@ -23,6 +23,11 @@ LogInWidget::~LogInWidget()
     delete ui;
 }
 
+void LogInWidget::setMsg(QString msg)
+{
+    ui->ErrorMessage->setText(msg);
+}
+
 void LogInWidget::on_btnLogin_clicked()
 {
     QString username = ui->txtUserName->text();
