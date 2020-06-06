@@ -333,7 +333,7 @@ border-radius:5px;</string>
      <item>
       <widget class="QWidget" name="horizontalWidget_2" native="true">
        <property name="styleSheet">
-        <string notr="true">background-color: rgba(94, 94, 94, 125);
+        <string notr="true">background-color: white;
 border-radius:10px;</string>
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout_3">
@@ -352,16 +352,10 @@ border-radius:10px;</string>
         <item>
          <widget class="QLabel" name="label">
           <property name="styleSheet">
-           <string notr="true">color: rgb(255, 255, 255);</string>
+           <string notr="true">color: black;</string>
           </property>
           <property name="text">
-           <string>you are seeing this becouse of fooling reason:
-1: You are not conncted to conrrect wifi network
-2: Your mobile Hotsspot is turned on
-
-solution:
-Try to connect manually:
-1: Get Ip address from Billdesk manager</string>
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;You are seeing this because of following reason:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;1: You are not conncted to correct wifi network&lt;/p&gt;&lt;p&gt;2: Your mobile Hotspot is turned on&lt;/p&gt;&lt;p&gt;3: Server is not on&lt;/p&gt;&lt;p&gt;&lt;br/&gt;S&lt;span style=&quot; font-weight:600;&quot;&gt;olution:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Try to connect manually:&lt;/p&gt;&lt;p&gt;1: Get IP address from Billdesk manager&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </property>
           <property name="wordWrap">
            <bool>true</bool>

@@ -178,7 +178,10 @@ void DynerAndroid::ChangeBoolvalue(bool value)
 
 void DynerAndroid::callCartObject(QString name,QString mblNo)
 {
-    static_cast<Cart*>(cart)->customerData(name,mblNo);
+    if(cart == childFrame)
+    {
+        static_cast<Cart*>(cart)->customerData(name,mblNo);
+    }
 }
 
 void DynerAndroid::on_btnHome_clicked()
@@ -207,7 +210,7 @@ void DynerAndroid::keyPressEvent(QKeyEvent *event)
             this->menuWidget(this->currentTbl);
             return;
         }
-        if(childFrame == tableButtons || childFrame == serverConnectionWidget)
+        if(childFrame == tableButtons || childFrame == serverConnectionWidget || childFrame == loginWindow)
         {
             if(isExiting)
             {
