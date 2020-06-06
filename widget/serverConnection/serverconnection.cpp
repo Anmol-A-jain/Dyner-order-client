@@ -18,9 +18,6 @@ serverConnection::serverConnection(QWidget *parent) :
     QString title = "Log In";
     static_cast<DynerAndroid*>(myParent)->setTitle(title);
 
-    GlobalData g;
-    ui->txtUserName->setText(XmlManipulation::getData(g.getTagName(g.clientName),g.getattribute(g.clientName)));
-
     connect(serverSocket::serverClient,&QTcpSocket::stateChanged,this,&serverConnection::stateChanged);
 
     const QHostAddress &localhost = QHostAddress::LocalHost;
@@ -39,6 +36,18 @@ serverConnection::serverConnection(QWidget *parent) :
         }
     }
     GlobalData::setShadow(ui->icon);
+
+    QString baseNetowrk = baseIp;
+
+    for(int i = 0; i <= 255; i++)
+    {
+        QString currIp = (baseNetowrk + "%1").arg(i);
+
+        findByPing* f = new findByPing(currIp,this);
+        f->start();
+        serverConnection::threadList.push_back(f);
+        connect(f,SIGNAL(connectToServer(QString)),this,SLOT(connectToServer(QString)));
+    }
 
 }
 
@@ -64,18 +73,6 @@ void serverConnection::deleteAllThread()
 
 void serverConnection::on_btnConnect_clicked()
 {
-    QString username = ui->txtUserName->text();
-    QString pass = ui->txtPass->text();
-    if(username.isEmpty() || pass.isEmpty())
-    {
-        QMessageBox::warning(this,"Empty!","Please fill all fields");
-        return;
-    }
-    GlobalData g;
-    XmlManipulation::setData(g.getTagName(g.clientName),g.getattribute(g.clientName),username);
-    XmlManipulation::setData(g.getTagName(g.clientPass),g.getattribute(g.clientPass),pass);
-    qDebug() << "serverConnection (on_btnConnect_clicked) : state : " << serverSocket::serverClient->state() ;
-
     if(ui->txtIp->text() == "")
         return;
     if(serverSocket::serverClient->state() == QTcpSocket::ConnectedState)
@@ -104,50 +101,50 @@ void serverConnection::stateChanged(QAbstractSocket::SocketState state)
     }
 }
 
-void serverConnection::on_btnauto_clicked()
-{
-    QString username = ui->txtUserName->text();
-    QString pass = ui->txtPass->text();
-    if(username.isEmpty() || pass.isEmpty())
-    {
-        QMessageBox::warning(this,"Empty!","Please fill all fields");
-        return;
-    }
-    GlobalData g;
-    XmlManipulation::setData(g.getTagName(g.clientName),g.getattribute(g.clientName),username);
-    XmlManipulation::setData(g.getTagName(g.clientPass),g.getattribute(g.clientPass),pass);
+//void serverConnection::on_btnauto_clicked()
+//{
+//    QString username = ui->txtUserName->text();
+//    QString pass = ui->txtPass->text();
+//    if(username.isEmpty() || pass.isEmpty())
+//    {
+//        QMessageBox::warning(this,"Empty!","Please fill all fields");
+//        return;
+//    }
+//    GlobalData g;
+//    XmlManipulation::setData(g.getTagName(g.clientName),g.getattribute(g.clientName),username);
+//    XmlManipulation::setData(g.getTagName(g.clientPass),g.getattribute(g.clientPass),pass);
 
 
-    const QHostAddress &localhost = QHostAddress::LocalHost;
-    QString ipaddress;
-    for(const QHostAddress &address : QNetworkInterface::allAddresses() )
-    {
-        if(address != localhost && address.protocol() == QAbstractSocket::IPv4Protocol )
-        {
-            baseIp = address.toString();
+//    const QHostAddress &localhost = QHostAddress::LocalHost;
+//    QString ipaddress;
+//    for(const QHostAddress &address : QNetworkInterface::allAddresses() )
+//    {
+//        if(address != localhost && address.protocol() == QAbstractSocket::IPv4Protocol )
+//        {
+//            baseIp = address.toString();
 
-            while(baseIp.right(1) != "." )
-            {
-                baseIp = baseIp.left(baseIp.length()-1);
-            }
-            ui->txtIp->setText(baseIp);
-        }
-    }
+//            while(baseIp.right(1) != "." )
+//            {
+//                baseIp = baseIp.left(baseIp.length()-1);
+//            }
+//            ui->txtIp->setText(baseIp);
+//        }
+//    }
 
-    QString baseNetowrk = baseIp;
+//    QString baseNetowrk = baseIp;
 
-    for(int i = 0; i <= 255; i++)
-    {
-        QString currIp = (baseNetowrk + "%1").arg(i);
+//    for(int i = 0; i <= 255; i++)
+//    {
+//        QString currIp = (baseNetowrk + "%1").arg(i);
 
-        findByPing* f = new findByPing(currIp,this);
-        f->start();
-        serverConnection::threadList.push_back(f);
-        connect(f,SIGNAL(connectToServer(QString)),this,SLOT(connectToServer(QString)));
-    }
-    ui->btnauto->hide();
-    ui->btnConnect->hide();
-    ui->label_2->hide();
-}
+//        findByPing* f = new findByPing(currIp,this);
+//        f->start();
+//        serverConnection::threadList.push_back(f);
+//        connect(f,SIGNAL(connectToServer(QString)),this,SLOT(connectToServer(QString)));
+//    }
+//    ui->btnauto->hide();
+//    ui->btnConnect->hide();
+//    ui->label_2->hide();
+//}
 
 

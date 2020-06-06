@@ -19,9 +19,10 @@ public:
     QWidget* newWindow(int option,int tblNo = 0);
     void dinningTableList(int tbl = 0);
     void cartWidgetWindow(int tblNo);
-    void logInWidget();
+    void sreverConnectionWidget();
     void closeWidget();
     void menuWidget(int tblNo);
+    void loginWidget();
 
     void setWidget(QWidget* child);
     void setTitle(QString title);
@@ -38,16 +39,17 @@ private slots:
 private:
     Ui::DynerAndroid *ui;
     QWidget* childFrame;
-    QWidget* logWindow;
+    QWidget* serverConnectionWidget;
     QWidget* tableButtons;
     QWidget* cart;
     QWidget* closeWindow;
     QWidget* menuList;
+    QWidget* loginWindow;
     int tbl;
     int currentTbl;
 
     bool isExiting;
-    enum widgetWindow{serverConnectionWindow,cartWindow,tableListWindow,closeWindowWidget,menuListWidget};
+    enum widgetWindow{serverConnectionWindow,cartWindow,tableListWindow,closeWindowWidget,menuListWidget,loginWindowWidget};
 
 };
 #endif // DYNERANDROID_H

@@ -24,6 +24,7 @@ SOURCES += \
     server/serversocket.cpp \
     widget/Cart/cart.cpp \
     widget/CloseWindow/closewindow.cpp \
+    widget/login/loginwidget.cpp \
     widget/menu/addorderitem.cpp \
     widget/menu/customWidget/orderitemdata.cpp \
     widget/serverConnection/serverconnection.cpp \
@@ -38,6 +39,7 @@ HEADERS += \
     server/serversocket.h \
     widget/Cart/cart.h \
     widget/CloseWindow/closewindow.h \
+    widget/login/loginwidget.h \
     widget/menu/addorderitem.h \
     widget/menu/customWidget/orderitemdata.h \
     widget/serverConnection/serverconnection.h \
@@ -48,6 +50,7 @@ FORMS += \
     dynerandroid.ui \
     widget/Cart/cart.ui \
     widget/CloseWindow/closewindow.ui \
+    widget/login/loginwidget.ui \
     widget/menu/addorderitem.ui \
     widget/menu/customWidget/orderitemdata.ui \
     widget/serverConnection/serverconnection.ui \

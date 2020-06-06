@@ -146,25 +146,26 @@ void serverSocket::myReadReady()
 
 void serverSocket::myConnected()
 {
-    serverConnection::deleteAllThread();
-    qDebug() << "serverConnection (myConnected) : state : " << serverSocket::serverClient->state() ;
-    qDebug() << "serverConnection (myConnected) : ip address : " << serverSocket::serverClient->peerAddress() ;
-    QByteArray data ;
-    QDataStream out(&data,QIODevice::ReadWrite);
-    qint16 i = ALLAction::getTotaltableNo;
+    static_cast<DynerAndroid*>(myParent)->loginWidget();
+//    serverConnection::deleteAllThread();
+//    qDebug() << "serverConnection (myConnected) : state : " << serverSocket::serverClient->state() ;
+//    qDebug() << "serverConnection (myConnected) : ip address : " << serverSocket::serverClient->peerAddress() ;
+//    QByteArray data ;
+//    QDataStream out(&data,QIODevice::ReadWrite);
+//    qint16 i = ALLAction::getTotaltableNo;
 
-    GlobalData g;
-    QString user = XmlManipulation::getData(g.getTagName(g.clientName),g.getattribute(g.clientName));
-    QString pass = XmlManipulation::getData(g.getTagName(g.clientPass),g.getattribute(g.clientPass));
-    out << i << user << pass ;
-    qDebug() << "serverConnection (myConnected) : data to send : " << data ;
-    //sending req for total table count
-    serverSocket::serverClient->write(data);
-    serverSocket::serverClient->waitForBytesWritten(1000);
+//    GlobalData g;
+//    QString user = XmlManipulation::getData(g.getTagName(g.clientName),g.getattribute(g.clientName));
+//    QString pass = XmlManipulation::getData(g.getTagName(g.clientPass),g.getattribute(g.clientPass));
+//    out << i << user << pass ;
+//    qDebug() << "serverConnection (myConnected) : data to send : " << data ;
+//    //sending req for total table count
+//    serverSocket::serverClient->write(data);
+//    serverSocket::serverClient->waitForBytesWritten(1000);
 
     QByteArray data1 ;
     QDataStream out1(&data1,QIODevice::ReadWrite);
-    i = ALLAction::menuData;
+    qint16 i = ALLAction::menuData;
     out1 << i ;
     qDebug() << "DynerAndroid (dinningTableList) : data to send : " << data1 ;
     //sending req for total table count

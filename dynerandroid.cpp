@@ -12,6 +12,7 @@
 #include "widget/Cart/cart.h"
 #include "widget/menu/addorderitem.h"
 #include "widget/CloseWindow/closewindow.h"
+#include "widget/login/loginwidget.h"
 
 DynerAndroid::DynerAndroid(QWidget *parent)
     : QMainWindow(parent)
@@ -20,8 +21,8 @@ DynerAndroid::DynerAndroid(QWidget *parent)
     ui->setupUi(this);
 
     tbl = 0;
-    logWindow = newWindow(widgetWindow::serverConnectionWindow);
-    childFrame = logWindow;
+    serverConnectionWidget = newWindow(widgetWindow::serverConnectionWindow);
+    childFrame = serverConnectionWidget;
     ui->windowContainer->addWidget(childFrame);
 
     ui->btnHome->hide();
@@ -41,12 +42,20 @@ QWidget* DynerAndroid::newWindow(int option,int tblNo)
 {
     switch (option)
     {
+        case loginWindowWidget:
+        {
+            ui->btnHome->hide();
+            ui->lblCurrentId->hide();
+            loginWindow = new LogInWidget(this);
+            return loginWindow;
+            break;
+        }
         case serverConnectionWindow :
         {
             ui->btnHome->hide();
             ui->lblCurrentId->hide();
-            logWindow = new serverConnection(this);
-            return logWindow;
+            serverConnectionWidget = new serverConnection(this);
+            return serverConnectionWidget;
             break;
         }
         case cartWindow:
@@ -107,16 +116,22 @@ void DynerAndroid::cartWidgetWindow(int tblNo)
     setWidget(cart);
 }
 
-void DynerAndroid::logInWidget()
+void DynerAndroid::sreverConnectionWidget()
 {
-    logWindow = newWindow(serverConnectionWindow);
-    setWidget(logWindow);
+    serverConnectionWidget = newWindow(serverConnectionWindow);
+    setWidget(serverConnectionWidget);
 }
 
 void DynerAndroid::menuWidget(int tblNo)
 {
     menuList = newWindow(menuListWidget,tblNo);
     setWidget(menuList);
+}
+
+void DynerAndroid::loginWidget()
+{
+    loginWindow = newWindow(loginWindowWidget);
+    setWidget(loginWindow);
 }
 
 void DynerAndroid::closeWidget()
@@ -192,7 +207,7 @@ void DynerAndroid::keyPressEvent(QKeyEvent *event)
             this->menuWidget(this->currentTbl);
             return;
         }
-        if(childFrame == tableButtons || childFrame == logWindow)
+        if(childFrame == tableButtons || childFrame == serverConnectionWidget)
         {
             if(isExiting)
             {

@@ -31,7 +31,7 @@ private slots:
 
     void stateChanged(QAbstractSocket::SocketState state);
 
-    void on_btnauto_clicked();
+//    void on_btnauto_clicked();
 
     void connectToServer(QString ip);
 
