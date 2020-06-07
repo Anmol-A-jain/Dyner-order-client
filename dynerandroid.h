@@ -17,7 +17,6 @@ public:
     ~DynerAndroid();
 
     QWidget* newWindow(int option,int tblNo = 0);
-    void dinningTableList(int tbl = 0);
     void cartWidgetWindow(int tblNo);
     void sreverConnectionWidget();
     void closeWidget();
@@ -28,12 +27,12 @@ public:
     void setTitle(QString title);
     void setCurrentId(QString id);
     void ChangeBoolvalue(bool value);
-
     void callCartObject(QString name,QString mblNo);
-
     void keyPressEvent(QKeyEvent* event) override;
-
     QWidget* getLoginWidget();
+
+public slots:
+    void dinningTableList(int tbl = 0);
 
 private slots:
     void on_btnHome_clicked();

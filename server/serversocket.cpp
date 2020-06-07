@@ -10,7 +10,8 @@
 
 QTcpSocket* serverSocket::serverClient = new QTcpSocket();
 
-serverSocket::serverSocket(QWidget* parent)
+serverSocket::serverSocket(QWidget* parent):
+    QObject(parent)
 {
     myParent = parent;
 }
@@ -21,6 +22,11 @@ void serverSocket::connectToSerever(QString ip)
     connect(serverClient,&QTcpSocket::connected,this,&serverSocket::myConnected,Qt::DirectConnection);
     connect(serverClient,&QTcpSocket::disconnected,this,&serverSocket::myDisconnect);
     serverClient->connectToHost(ip,1812);
+}
+
+serverSocket::~serverSocket()
+{
+
 }
 
 void serverSocket::myReadReady()
@@ -71,7 +77,8 @@ void serverSocket::myReadReady()
             in >> tblNo;
             qDebug() << "serverConnection (myReadReady) : total Table no : " << tblNo;
 
-            static_cast<DynerAndroid*>(myParent)->dinningTableList(tblNo);
+            //static_cast<DynerAndroid*>(myParent)->dinningTableList(tblNo);
+            emit dinningTableList(tblNo);
 
             break;
 
@@ -156,7 +163,13 @@ void serverSocket::myReadReady()
 
 void serverSocket::myConnected()
 {
-    static_cast<DynerAndroid*>(myParent)->loginWidget();
+    DynerAndroid* dynerAndroid = static_cast<DynerAndroid*>(myParent);
+
+//    connect(this,SIGANL(dinningTableList(int)),dynerAndroid,SLOT(dinningTableList(int)));
+//    connect(this, &serverSocket::dinningTableList , dynerAndroid, &DynerAndroid::dinningTableList);
+    connect(this, SIGNAL(dinningTableList(int)), dynerAndroid, SLOT(dinningTableList(int)));
+
+    dynerAndroid->loginWidget();
 //    serverConnection::deleteAllThread();
 //    qDebug() << "serverConnection (myConnected) : state : " << serverSocket::serverClient->state() ;
 //    qDebug() << "serverConnection (myConnected) : ip address : " << serverSocket::serverClient->peerAddress() ;

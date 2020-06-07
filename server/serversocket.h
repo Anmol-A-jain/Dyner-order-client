@@ -7,10 +7,13 @@
 
 class serverSocket : public QObject
 {
+    Q_OBJECT
 public:
     serverSocket(QWidget* parent);
     void connectToSerever(QString ip);
     static QTcpSocket* serverClient;
+
+    ~serverSocket();
 
 public slots:
     void myReadReady();
@@ -18,6 +21,9 @@ public slots:
     void myConnected();
 
     void myDisconnect();
+
+signals:
+    void dinningTableList(int);
 
 
 private:
